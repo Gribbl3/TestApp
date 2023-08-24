@@ -1,4 +1,4 @@
-﻿namespace TestApp
+﻿namespace DirectoryApp
 {
     public partial class AppShell : Shell
     {
