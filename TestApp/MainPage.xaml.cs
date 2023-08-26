@@ -6,6 +6,7 @@
         public MainPage()
         {
             InitializeComponent();
+            Shell.Current.Title = "Window Title";
         }
 
         private void OnEntryTextChanged(object sender, TextChangedEventArgs e)
@@ -25,20 +26,19 @@
             string enteredUsername = usernameEntry.Text;
             string enteredPassword = passwordEntry.Text;
 
-            //check if both or one of the fields is empty
-            if(String.IsNullOrEmpty(enteredUsername) || String.IsNullOrEmpty(enteredPassword))
-            {
-                errMessage.Text = "Username and/or Password should not be empty. Please try again";
-            }
-            
-             
             //check if field entered is incorrect 
             bool isAuthenticated = AuthenticateUser(enteredUsername, enteredPassword);
 
-            if(!isAuthenticated)
+            //check if both or one of the fields is empty
+            if (String.IsNullOrEmpty(enteredUsername) || String.IsNullOrEmpty(enteredPassword))
+            {
+                errMessage.Text = "Username and/or Password should not be empty. Please try again";
+                errMessage.TextColor = Colors.Red;
+            }
+            else if(!isAuthenticated)
             {   
                 errMessage.Text = "Username and/or Password is incorrect. Please try again.";
-                    
+                errMessage.TextColor = Colors.Red;
             }
             else
             {
@@ -46,7 +46,6 @@
                 errMessage.TextColor = Colors.Green;
             }
             
-
             errMessage.IsVisible = true;
 
         }

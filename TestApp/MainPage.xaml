@@ -34,7 +34,6 @@
             
             <Label x:Name = "errMessage"
                    IsVisible="false"
-                   TextColor = "Red"
                    />
         </VerticalStackLayout>
     </ScrollView>
