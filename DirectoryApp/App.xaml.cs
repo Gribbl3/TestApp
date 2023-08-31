@@ -1,4 +1,6 @@
-﻿namespace DirectoryApp
+﻿using DirectoryApp.Pages;
+
+namespace DirectoryApp
 {
     public partial class App : Application
     {
@@ -6,7 +8,7 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new Register();
         }
     }
 }

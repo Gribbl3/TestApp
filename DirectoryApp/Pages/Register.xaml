@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DirectoryApp.Pages.Register"
+             Title="Register">
+    
+    
+    <Grid RowDefinitions="AUTO, AUTO"
+          ColumnDefinitions="AUTO, AUTO"
+          HorizontalOptions="Center"
+          VerticalOptions="Center"
+          ColumnSpacing="50"
+          Margin="30">
+
+
+        <VerticalStackLayout
+            Grid.Row="0"
+            Grid.Column="0"
+            Spacing="12"
+            BackgroundColor="grey"
+            MaximumWidthRequest="400">
+
+            <HorizontalStackLayout
+                Spacing="10">
+                <Label Text="Student ID"></Label>
+                <Entry x:Name="txtStudentID"></Entry>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="First Name"></Label>
+                <Entry x:Name="txtFirstName"></Entry>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Last Name"></Label>
+                <Entry x:Name="txtLastName"></Entry>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Email"></Label>
+                <Entry x:Name="txtEmail"></Entry>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Password"></Label>
+                <Entry x:Name="txtPassword"></Entry>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Confirm Password"></Label>
+                <Entry x:Name="txtConfirmPassword"></Entry>
+            </HorizontalStackLayout>
+            
+            
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+            Grid.Row="0"
+            Grid.Column="1"
+            BackgroundColor="grey">
+
+            <HorizontalStackLayout 
+                HorizontalOptions="Center">
+                
+                <Label Text="Gender"></Label>
+                <RadioButton Content="Male"></RadioButton>
+                <RadioButton Content="Female"></RadioButton>
+                
+            </HorizontalStackLayout>
+
+
+            <HorizontalStackLayout>
+                <Label Text="Birth Date"></Label>
+                <Entry></Entry>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Mobile No."></Label>
+                <Entry></Entry>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="City"></Label>
+                <Entry></Entry>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Password"></Label>
+                <Entry></Entry>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Confirm Password"></Label>
+                <Entry></Entry>
+            </HorizontalStackLayout>
+            
+        </VerticalStackLayout>
+
+        
+        
+
+    </Grid>
+</ContentPage>

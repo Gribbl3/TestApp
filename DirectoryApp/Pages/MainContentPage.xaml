@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DirectoryApp.Pages.MainContentPage"
+             Title="MainContentPage">
+    
+    <VerticalStackLayout
+        Spacing="15"
+        Padding="30, 0"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        MaximumWidthRequest="400">
+
+        <Label  Text="Username"/>
+        <Entry  x:Name ="usernameEntry"
+                Placeholder="Username" 
+                ClearButtonVisibility="WhileEditing"/>
+
+        <Label  Text="Password"/>
+        <Entry  x:Name ="passwordEntry" 
+                Placeholder="*******" 
+                IsPassword="True"/>
+
+        <Button Text="Login"
+                FontAttributes="Bold"
+                BackgroundColor="SkyBlue"
+                TextColor="White"
+                Clicked="OnButtonClicked"/>
+
+        <Button Text="New User? Register Here"
+                FontAttributes="Italic"
+                x:Name="NavigateRegisterPageBtn"></Button>
+
+        <Label x:Name = "errMessage"
+                IsVisible="false"/>
+
+    </VerticalStackLayout>
+</ContentPage>
