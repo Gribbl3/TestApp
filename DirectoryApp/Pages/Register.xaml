@@ -204,13 +204,12 @@
                 <Border Stroke="black">
                     <Picker x:Name="pickerSchoolProgram" 
                             WidthRequest="300"
-                            ItemsSource="{Binding SchoolProgram}"
-                            SelectedIndex="0">
-                        <!--<Picker.Items>
+                            SelectedItem="{Binding SelectedSchoolProgram}">
+                        <Picker.Items>
                             <x:String>-SELECT-</x:String>
                             <x:String>School of Engineering</x:String>
                             <x:String>School of Computer Studies</x:String>
-                        </Picker.Items>-->
+                        </Picker.Items>
                     </Picker>
                 </Border>
                 
@@ -225,8 +224,9 @@
 
                 <Border Stroke="black">
                     <Picker x:Name="pickerCourse" 
-                            SelectedIndex="0"
-                            WidthRequest="300">
+                            WidthRequest="300"
+                            ItemsSource="{Binding Courses}"
+                            SelectedItem="{Binding SelectedCourse}">
                     </Picker>
                 </Border>
 
