@@ -5,7 +5,7 @@ public partial class MainContentPage : ContentPage
     public MainContentPage()
     {
         InitializeComponent();
-        Shell.Current.Title = "Window Title";
+        Shell.Current.Title = "Login";
     }
 
     private void OnButtonClicked(object sender, EventArgs e)
@@ -43,8 +43,8 @@ public partial class MainContentPage : ContentPage
         return username == "admin" && password == "admin";
     }
 
-    //private async void NavigateRegisterPageBtn_Clicked(object sender, EventArgs e)
-    //{
-    //    await Navigation.PushModalAsync(new Register());
-    //}
+    private async void NavigateRegisterPageBtn_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushModalAsync(new Register());
+    }
 }

@@ -9,27 +9,36 @@
         Padding="30, 0"
         VerticalOptions="Center"
         HorizontalOptions="Center"
+        MinimumWidthRequest="400"
         MaximumWidthRequest="400">
 
-        <Label  Text="Username"/>
-        <Entry  x:Name ="usernameEntry"
+        <Label Text="Username"/>
+        <Border Stroke="black">
+            <Entry  
+                x:Name ="usernameEntry"
                 Placeholder="Username" 
                 ClearButtonVisibility="WhileEditing"/>
+        </Border>
+        
 
-        <Label  Text="Password"/>
-        <Entry  x:Name ="passwordEntry" 
+        <Label Text="Password"/>
+        <Border Stroke="black">
+            <Entry  
+                x:Name ="passwordEntry" 
                 Placeholder="*******" 
                 IsPassword="True"/>
+        </Border>
 
         <Button Text="Login"
                 FontAttributes="Bold"
-                BackgroundColor="SkyBlue"
+                BackgroundColor="#008fff"
                 TextColor="White"
                 Clicked="OnButtonClicked"/>
-
+    
         <Button Text="New User? Register Here"
                 FontAttributes="Italic"
-                x:Name="NavigateRegisterPageBtn"></Button>
+                x:Name="NavigateRegisterPageBtn"
+                Clicked="NavigateRegisterPageBtn_Clicked"></Button>
 
         <Label x:Name = "errMessage"
                 IsVisible="false"/>

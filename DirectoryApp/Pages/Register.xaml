@@ -4,112 +4,124 @@
              x:Class="DirectoryApp.Pages.Register"
              Title="Register">
     
-    
-    <!--<Grid RowDefinitions="*, *"
-          ColumnDefinitions="50*, 50*"
-          ColumnSpacing="50"
-          BackgroundColor="AliceBlue"
-          VerticalOptions="Center"
-          HorizontalOptions="Center"
-          Margin="10">
-
-        <StackLayout BackgroundColor="AntiqueWhite"
-                     Grid.Column="0"
-                     Orientation="Horizontal"
-                     Spacing="10"
-                     Padding="5"
-                     Margin="5">
-            <VerticalStackLayout
-                Spacing="10">
-                <Label Text="Student ID"></Label>
-                <Label Text="First Name"></Label>
-                <Label Text="Last Name"></Label>
-                <Label Text="Email"></Label>
-                <Label Text="Password"></Label>
-                <Label Text="Confirm Password"></Label>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout>
-                <Entry></Entry>
-                <Entry></Entry>
-                <Entry></Entry>
-                <Entry></Entry>
-                <Entry></Entry>
-                <Entry></Entry>
-            </VerticalStackLayout>
-        </StackLayout>
-
-        <StackLayout Grid.Column="1"
-                     BackgroundColor="AntiqueWhite"
-                     Spacing="10"
-                     Padding="5"
-                     Orientation="Horizontal">
-            <VerticalStackLayout>
-                <Label Text="Student ID"></Label>
-                <Entry Placeholder="Enter Student ID"></Entry>
-
-                <Label Text="First Name"></Label>
-                <Entry Placeholder="Enter First Name"></Entry>
-
-                <Label Text="Last Name"></Label>
-                <Entry Placeholder="Enter Last Name"></Entry>
-
-                <Label Text="Email"></Label>
-                <Entry Placeholder="Enter Email"></Entry>
-
-                <Label Text="Password"></Label>
-                <Entry Placeholder="Enter Password" IsPassword="True"></Entry>
-
-                <Label Text="Confirm Password"></Label>
-                <Entry Placeholder="Confirm Password" IsPassword="True"></Entry>
-            </VerticalStackLayout>
-        </StackLayout>
-    </Grid>-->
-
     <Grid RowDefinitions="80*, 20*"
           ColumnDefinitions="50*, 50*"
-          ColumnSpacing="10"
-          BackgroundColor="DarkBlue"
-          Margin="10">
+          HorizontalOptions="Center"
+          VerticalOptions="Center"
+          RowSpacing="15">
+          <!--BackgroundColor="DarkBlue"-->
+          <!--ColumnSpacing="10"-->
+          
 
 
         <!-- left registration form -->
-
+        <!--add comments each label and entry for documentation-->
+        
+        
         <VerticalStackLayout 
             Grid.Column="0"
-            Spacing="20"
+            Spacing="10"
             Padding="10"
-            WidthRequest="600"
-            BackgroundColor="DarkGoldenrod">
+            WidthRequest="500">
+            <!--BackgroundColor="DarkGoldenrod"-->
             
-            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                <Label Text="Student ID" VerticalTextAlignment="Center" WidthRequest="150"  />
-                <Entry Placeholder="Enter Student ID" WidthRequest="300" />
+            
+            
+            <HorizontalStackLayout 
+                Spacing="10"
+                VerticalOptions="Center">
+                
+                <Label Text="Student ID" 
+                       VerticalTextAlignment="Center"
+                       WidthRequest="150"  />
+                
+                <Border Stroke="black">
+                    <Entry x:Name="txtStudentID" 
+                           Placeholder="" WidthRequest="300" 
+                           SemanticProperties.Description="Required. Numeric values only"
+                           MaxLength="5" />
+                </Border>
+            </HorizontalStackLayout>
+                
+            
+            <HorizontalStackLayout 
+                Spacing="10">
+                
+                <Label Text="First Name" 
+                       VerticalTextAlignment="Center" 
+                       WidthRequest="150"/>
+                
+                <Border Stroke="black">
+                    <Entry Placeholder="" 
+                           WidthRequest="300" 
+                           SemanticProperties.Description="Required"
+                           x:Name="txtFirstName"/>
+                </Border>
+            </HorizontalStackLayout>
+            
+            
+            <HorizontalStackLayout 
+                Spacing="10">
+                
+                <Label Text="Last Name" 
+                       VerticalTextAlignment="Center" 
+                       WidthRequest="150"/>
+                
+                <Border Stroke="black">
+                    <Entry Placeholder="" 
+                           WidthRequest="300" 
+                           SemanticProperties.Description="Required"
+                           x:Name="txtLastName"/>
+                </Border>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout Spacing="10">
-                <Label Text="First Name" VerticalTextAlignment="Center" WidthRequest="150"/>
-                <Entry Placeholder="Enter First Name" WidthRequest="300"/>
+            
+            <HorizontalStackLayout 
+                Spacing="10">
+                
+                <Label Text="Email" 
+                       VerticalTextAlignment="Center" 
+                       WidthRequest="150"/>
+                
+                <Border Stroke="black">
+                    <Entry Placeholder="" WidthRequest="300" 
+                           SemanticProperties.Description="Required"
+                           x:Name="txtEmail"/>
+                </Border>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout Spacing="10">
-                <Label Text="Last Name" VerticalTextAlignment="Center" WidthRequest="150"/>
-                <Entry Placeholder="Enter Last Name" WidthRequest="300"/>
+            
+            <HorizontalStackLayout 
+                Spacing="10">
+                
+                <Label Text="Password" 
+                       VerticalTextAlignment="Center" 
+                       WidthRequest="150"/>
+                
+                <Border Stroke="black">
+                    <Entry Placeholder="********" 
+                           IsPassword="True" 
+                           WidthRequest="300" 
+                           ClearButtonVisibility="WhileEditing"
+                           SemanticProperties.Description="Required. Minimum of 8 characters." x:Name="txtPassword"/>
+                </Border>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout Spacing="10">
-                <Label Text="Email" VerticalTextAlignment="Center" WidthRequest="150"/>
-                <Entry Placeholder="Enter Email" WidthRequest="300"/>
-            </HorizontalStackLayout>
-
-            <HorizontalStackLayout Spacing="10">
-                <Label Text="Password" VerticalTextAlignment="Center" WidthRequest="150"/>
-                <Entry Placeholder="Enter Password" IsPassword="True" WidthRequest="300" />
-            </HorizontalStackLayout>
-
-            <HorizontalStackLayout Spacing="10">
-                <Label Text="Confirm Password" VerticalTextAlignment="Center" WidthRequest="150"/>
-                <Entry Placeholder="Confirm Password" IsPassword="True" WidthRequest="300" ClearButtonVisibility="WhileEditing"/>
+            
+            <HorizontalStackLayout 
+                Spacing="10">
+                
+                <Label Text="Confirm Password" 
+                       VerticalTextAlignment="Center" 
+                       WidthRequest="150"/>
+                
+                <Border Stroke="black">
+                    <Entry Placeholder="********" 
+                           IsPassword="True" 
+                           WidthRequest="300" 
+                           ClearButtonVisibility="WhileEditing"
+                           x:Name="txtConfirmPassword"/>
+                </Border>
             </HorizontalStackLayout>
             
         </VerticalStackLayout>
@@ -117,32 +129,116 @@
 
         <!-- right registration form-->
 
-        <StackLayout Grid.Column="1"
-                     Grid.Row="0"
-                     BackgroundColor="Beige"
-                     Padding="10">
+        <VerticalStackLayout 
+            Grid.Column="1"
+            Grid.Row="0"
+            Padding="10"
+            Spacing="10"
+            WidthRequest="500">
 
-            <Label Text="Gender" VerticalOptions="CenterAndExpand" />
-            <Entry Placeholder="Enter Gender" />
+            <!--BackgroundColor="DarkGreen"-->
 
-            <Label Text="Birth Date" VerticalOptions="CenterAndExpand" />
-            <DatePicker />
+            <HorizontalStackLayout Spacing="10"
+                                   VerticalOptions="Center">
+                <Label Text="Gender" 
+                       VerticalTextAlignment="Center" 
+                       WidthRequest="120"  />
+                <RadioButton Content="Male"></RadioButton>
+                <RadioButton Content="Female"></RadioButton>
+            </HorizontalStackLayout>
 
-            <Label Text="Mobile No." VerticalOptions="CenterAndExpand" />
-            <Entry Placeholder="Enter Mobile No." />
+            
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Birth Date" 
+                       VerticalTextAlignment="Center" 
+                       WidthRequest="150"/>
+                <Border Stroke="black">
+                    <DatePicker WidthRequest="300" ></DatePicker>
+                </Border>
+            </HorizontalStackLayout>
 
-            <Label Text="City" VerticalOptions="CenterAndExpand" />
-            <Entry Placeholder="Enter City" />
+            
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Mobile No." 
+                       VerticalTextAlignment="Center" 
+                       WidthRequest="150" />
+                <Border Stroke="black">
+                    <Entry WidthRequest="300" 
+                           ToolTipProperties.Text="Number input only" 
+                           x:Name="txtMobileNumber"/>
+                </Border>
+            </HorizontalStackLayout>
 
-            <Label Text="School Program" VerticalOptions="CenterAndExpand" />
-            <Entry Placeholder="Enter School Program" />
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="City" 
+                       VerticalTextAlignment="Center" 
+                       WidthRequest="150"/>
+                <Border Stroke="black">
+                    <Entry WidthRequest="300"/>
+                </Border>
+            </HorizontalStackLayout>
 
-            <Label Text="Course" VerticalOptions="CenterAndExpand" />
-            <Entry Placeholder="Enter Course" />
+            <HorizontalStackLayout 
+                Spacing="10">
+                
+                <Label Text="School Program" 
+                       VerticalTextAlignment="Center" 
+                       WidthRequest="150"/>
+                
+                <Border Stroke="black">
+                    <Picker x:Name="pickerSchoolProgram" MinimumWidthRequest="300" >
+                        <Picker.Items>
+                            <x:String>Hi</x:String>
+                            <x:String>Hello</x:String>
+                            <x:String>Im allen</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </Border>
+                
+            </HorizontalStackLayout>
 
-            <Label Text="Year Level" VerticalOptions="CenterAndExpand" />
-            <Entry Placeholder="Enter Year Level" />
-        </StackLayout>
+            <HorizontalStackLayout 
+                Spacing="10">
+                
+                <Label Text="Course" 
+                       VerticalTextAlignment="Center" 
+                       WidthRequest="150"/>
+
+                <Border Stroke="black">
+                    <Picker x:Name="pickerCourse" MinimumWidthRequest="300">
+                        <Picker.Items>
+                            <x:String>Hello</x:String>
+                            <x:String>BSCPE</x:String>
+                            <x:String>Hi</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </Border>
+
+            </HorizontalStackLayout>
+            
+            
+            <HorizontalStackLayout 
+                Spacing="10">
+                
+                <Label Text="Year Level" 
+                       VerticalTextAlignment="Center" 
+                       WidthRequest="150"/>
+
+                <Border Stroke="black">
+                    <Picker x:Name="pickerYearLevel" 
+                            MinimumWidthRequest="300"
+                            HorizontalOptions="Fill">
+                        <Picker.Items>
+                            <x:String>First Year</x:String>
+                            <x:String>Second Year</x:String>
+                            <x:String>Third Year</x:String>
+                            <x:String>Fourth Year</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </Border>
+
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
         
         <!-- Bottom Buttons -->
         <HorizontalStackLayout
@@ -150,11 +246,28 @@
             VerticalOptions="Center"
             Grid.Row="1"
             Grid.ColumnSpan="2"
-            Spacing="10">
-            
-            <Button Text="Submit" WidthRequest="100"></Button>
-            <Button Text="Reset" WidthRequest="100"></Button>
-            
+            Spacing="15">
+
+            <Button Text="Submit" 
+                    WidthRequest="100" 
+                    CornerRadius="12" 
+                    FontAttributes="Bold" 
+                    FontSize="15" 
+                    BackgroundColor="#008fff" 
+                    BorderColor="Black" 
+                    x:Name="btnSubmit" 
+                    Clicked="OnSubmitButtonClick"></Button>
+
+            <Button Text="Reset" WidthRequest="100" 
+                    CornerRadius="12" 
+                    FontAttributes="Bold"
+                    FontSize="15"  
+                    BackgroundColor="#abadaf" 
+                    BorderColor="Black" 
+                    x:Name="btnReset" 
+                    Clicked="OnResetButtonClick"></Button>
+
         </HorizontalStackLayout>
+        
     </Grid>
 </ContentPage>
