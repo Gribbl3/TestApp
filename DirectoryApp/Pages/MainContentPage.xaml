@@ -34,11 +34,16 @@
                 BackgroundColor="#008fff"
                 TextColor="White"
                 Clicked="OnButtonClicked"/>
-    
-        <Button Text="New User? Register Here"
-                FontAttributes="Italic"
-                x:Name="NavigateRegisterPageBtn"
-                Clicked="NavigateRegisterPageBtn_Clicked"></Button>
+
+        <Label Text="New User? Register Here"
+               TextDecorations="Underline"
+               TextColor="#3b3bff"
+               x:Name="lblNewUser"
+               HorizontalOptions="Center">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnLabelTextTapped"/>
+            </Label.GestureRecognizers>
+        </Label>
 
         <Label x:Name = "errMessage"
                 IsVisible="false"/>

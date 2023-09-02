@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
+    
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="DirectoryApp.Pages.Register"
-             Title="Register">
-    
+             Title="Register"
+             xmlns:vm="clr-namespace:DirectoryApp.ViewModel"
+             x:DataType="vm:Student">
+
     <Grid RowDefinitions="80*, 20*"
           ColumnDefinitions="50*, 50*"
           HorizontalOptions="Center"
@@ -37,8 +42,9 @@
                 
                 <Border Stroke="black">
                     <Entry x:Name="txtStudentID" 
-                           Placeholder="" WidthRequest="300" 
-                           SemanticProperties.Description="Required. Numeric values only"
+                           Placeholder="" 
+                           WidthRequest="300" 
+                           ToolTipProperties.Text="Required. Numeric values only"
                            MaxLength="5" />
                 </Border>
             </HorizontalStackLayout>
@@ -54,7 +60,7 @@
                 <Border Stroke="black">
                     <Entry Placeholder="" 
                            WidthRequest="300" 
-                           SemanticProperties.Description="Required"
+                           ToolTipProperties.Text="Required"
                            x:Name="txtFirstName"/>
                 </Border>
             </HorizontalStackLayout>
@@ -70,7 +76,7 @@
                 <Border Stroke="black">
                     <Entry Placeholder="" 
                            WidthRequest="300" 
-                           SemanticProperties.Description="Required"
+                           ToolTipProperties.Text="Required"
                            x:Name="txtLastName"/>
                 </Border>
             </HorizontalStackLayout>
@@ -85,7 +91,7 @@
                 
                 <Border Stroke="black">
                     <Entry Placeholder="" WidthRequest="300" 
-                           SemanticProperties.Description="Required"
+                           ToolTipProperties.Text="Required"
                            x:Name="txtEmail"/>
                 </Border>
             </HorizontalStackLayout>
@@ -99,12 +105,19 @@
                        WidthRequest="150"/>
                 
                 <Border Stroke="black">
-                    <Entry Placeholder="********" 
+                    <Entry Keyboard="Numeric"
+                           Placeholder="********" 
                            IsPassword="True" 
+                           TextChanged="txtPassword_TextChanged"
                            WidthRequest="300" 
                            ClearButtonVisibility="WhileEditing"
-                           SemanticProperties.Description="Required. Minimum of 8 characters." x:Name="txtPassword"/>
+                           ToolTipProperties.Text="Required. Minimum of 8 characters."
+                           x:Name="txtPassword"/>
                 </Border>
+                <Label IsVisible="false"
+                       x:Name="errorLabel">
+                    
+                </Label>
             </HorizontalStackLayout>
 
             
@@ -143,8 +156,10 @@
                 <Label Text="Gender" 
                        VerticalTextAlignment="Center" 
                        WidthRequest="120"  />
-                <RadioButton Content="Male"></RadioButton>
-                <RadioButton Content="Female"></RadioButton>
+                <RadioButton Content="Male"
+                             x:Name="rdoMale"></RadioButton>
+                <RadioButton Content="Female"
+                             x:Name="rdoFemale"></RadioButton>
             </HorizontalStackLayout>
 
             
@@ -153,7 +168,8 @@
                        VerticalTextAlignment="Center" 
                        WidthRequest="150"/>
                 <Border Stroke="black">
-                    <DatePicker WidthRequest="300" ></DatePicker>
+                    <DatePicker WidthRequest="300"
+                                x:Name="dateBirthDate"></DatePicker>
                 </Border>
             </HorizontalStackLayout>
 
@@ -186,12 +202,15 @@
                        WidthRequest="150"/>
                 
                 <Border Stroke="black">
-                    <Picker x:Name="pickerSchoolProgram" MinimumWidthRequest="300" >
-                        <Picker.Items>
-                            <x:String>Hi</x:String>
-                            <x:String>Hello</x:String>
-                            <x:String>Im allen</x:String>
-                        </Picker.Items>
+                    <Picker x:Name="pickerSchoolProgram" 
+                            WidthRequest="300"
+                            ItemsSource="{Binding SchoolProgram}"
+                            SelectedIndex="0">
+                        <!--<Picker.Items>
+                            <x:String>-SELECT-</x:String>
+                            <x:String>School of Engineering</x:String>
+                            <x:String>School of Computer Studies</x:String>
+                        </Picker.Items>-->
                     </Picker>
                 </Border>
                 
@@ -205,12 +224,9 @@
                        WidthRequest="150"/>
 
                 <Border Stroke="black">
-                    <Picker x:Name="pickerCourse" MinimumWidthRequest="300">
-                        <Picker.Items>
-                            <x:String>Hello</x:String>
-                            <x:String>BSCPE</x:String>
-                            <x:String>Hi</x:String>
-                        </Picker.Items>
+                    <Picker x:Name="pickerCourse" 
+                            SelectedIndex="0"
+                            WidthRequest="300">
                     </Picker>
                 </Border>
 
@@ -227,13 +243,9 @@
                 <Border Stroke="black">
                     <Picker x:Name="pickerYearLevel" 
                             MinimumWidthRequest="300"
-                            HorizontalOptions="Fill">
-                        <Picker.Items>
-                            <x:String>First Year</x:String>
-                            <x:String>Second Year</x:String>
-                            <x:String>Third Year</x:String>
-                            <x:String>Fourth Year</x:String>
-                        </Picker.Items>
+                            WidthRequest="300"
+                            SelectedIndex="0"
+                            ItemsSource="{Binding YearLevel}">
                     </Picker>
                 </Border>
 

@@ -1,4 +1,5 @@
 namespace DirectoryApp.Pages;
+using DirectoryApp.ViewModel;
 using static System.String;
 public partial class Register : ContentPage
 {
@@ -6,7 +7,9 @@ public partial class Register : ContentPage
     {
         InitializeComponent();
         //set current theme to light
-
+        Application.Current.UserAppTheme = AppTheme.Dark;
+        //set the binding context to the student view model
+        BindingContext = new Student();
     }
 
     private void OnSubmitButtonClick(object sender, EventArgs e)
@@ -20,7 +23,7 @@ public partial class Register : ContentPage
         else
         {
             //call the reset form method
-            ResetForm();
+
             DisplayAlert("Success", "You have successfully registered", "OK");
         }
     }
@@ -68,10 +71,39 @@ public partial class Register : ContentPage
         txtConfirmPassword.Text = "";
         txtMobileNumber.Text = "";
         txtEmail.Text = "";
+        pickerSchoolProgram.SelectedIndex = 0;
+        pickerCourse.SelectedIndex = 0;
+        pickerYearLevel.SelectedIndex = 0;
+
     }
 
-    private void Reset_Clicked(object sender, EventArgs e)
+    private void txtPassword_TextChanged(object sender, TextChangedEventArgs e)
     {
-        txtStudentID.Text = "";
+        //if (!string.IsNullOrEmpty(txtPassword.Text) && txtPassword.Text.Length < 8)
+        //{
+        //    // Display an error message or take appropriate action
+        //    // You can also disable a button or perform other validation checks here
+        //    // For example, you can set an error label's text:
+        //    errorLabel.Text = "Enter at least 8 digits";
+        //}
+        //else
+        //{
+        //    // Clear the error message if the input is valid
+        //    errorLabel.Text = string.Empty;
+        //}
+
+        errorLabel.IsVisible = !string.IsNullOrEmpty(errorLabel.Text);
+        errorLabel.Text = !string.IsNullOrEmpty(txtPassword.Text) && txtPassword.Text.Length < 8 ? "Enter at least 8 digits" : string.Empty;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Set the default selected item by index
+        pickerSchoolProgram.SelectedIndex = 0; // 0 corresponds to "-SELECT-"
+        pickerCourse.SelectedIndex = 0;
+        pickerYearLevel.SelectedIndex = 0;
+    }
+
 }
