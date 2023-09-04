@@ -48,4 +48,6 @@ public partial class MainContentPage : ContentPage
     {
         await Navigation.PushModalAsync(new Register());
     }
+
+
 }

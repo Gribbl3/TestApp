@@ -1,52 +1,54 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DirectoryApp.Pages.MainContentPage"
-             Title="MainContentPage">
-    
+<ContentPage
+    x:Class="DirectoryApp.Pages.MainContentPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="MainContentPage">
+
     <VerticalStackLayout
-        Spacing="15"
-        Padding="30, 0"
-        VerticalOptions="Center"
+        Padding="30,0"
         HorizontalOptions="Center"
+        MaximumWidthRequest="400"
         MinimumWidthRequest="400"
-        MaximumWidthRequest="400">
+        Spacing="15"
+        VerticalOptions="Center">
 
-        <Label Text="Username"/>
+        <Label Text="Username" />
         <Border Stroke="black">
-            <Entry  
-                x:Name ="usernameEntry"
-                Placeholder="Username" 
-                ClearButtonVisibility="WhileEditing"/>
-        </Border>
-        
-
-        <Label Text="Password"/>
-        <Border Stroke="black">
-            <Entry  
-                x:Name ="passwordEntry" 
-                Placeholder="*******" 
-                IsPassword="True"/>
+            <Entry
+                x:Name="usernameEntry"
+                ClearButtonVisibility="WhileEditing"
+                Placeholder="Username" />
         </Border>
 
-        <Button Text="Login"
-                FontAttributes="Bold"
-                BackgroundColor="#008fff"
-                TextColor="White"
-                Clicked="OnButtonClicked"/>
 
-        <Label Text="New User? Register Here"
-               TextDecorations="Underline"
-               TextColor="#3b3bff"
-               x:Name="lblNewUser"
-               HorizontalOptions="Center">
+        <Label Text="Password" />
+        <Border Stroke="black">
+            <Entry
+                x:Name="passwordEntry"
+                IsPassword="True"
+                Placeholder="*******" />
+        </Border>
+
+        <Button
+            BackgroundColor="#008fff"
+            Clicked="OnButtonClicked"
+            FontAttributes="Bold"
+            Text="Login"
+            TextColor="White" />
+
+        <Label
+            x:Name="lblNewUser"
+            HorizontalOptions="Center"
+            Text="New User? Register Here"
+            TextColor="#3b3bff"
+            TextDecorations="Underline">
             <Label.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnLabelTextTapped"/>
+                <TapGestureRecognizer Tapped="OnLabelTextTapped" />
             </Label.GestureRecognizers>
         </Label>
 
-        <Label x:Name = "errMessage"
-                IsVisible="false"/>
+        <Label x:Name="errMessage" IsVisible="false" />
 
     </VerticalStackLayout>
 </ContentPage>

@@ -1,16 +1,81 @@
 namespace DirectoryApp.Pages;
-using DirectoryApp.ViewModel;
+
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using static System.String;
-public partial class Register : ContentPage
+public partial class Register : ContentPage, INotifyPropertyChanged
 {
+    private ObservableCollection<String> _schoolProgram;
+    private ObservableCollection<String> _courses;
+    private ObservableCollection<String> _yearLevel;
+
+    public ObservableCollection<String> SchoolProgram
+    {
+        get => _schoolProgram;
+        set
+        {
+            _schoolProgram = value;
+            OnPropertyChanged(nameof(SchoolProgram));
+        }
+    }
+
+    public ObservableCollection<String> Courses
+    {
+        get => _courses;
+        set
+        {
+            _courses = value;
+            OnPropertyChanged(nameof(Courses));
+        }
+    }
+
+    public ObservableCollection<String> YearLevel
+    {
+        get => _yearLevel;
+        set
+        {
+            _yearLevel = value;
+            OnPropertyChanged(nameof(YearLevel));
+        }
+    }
+
+
+
     public Register()
     {
         InitializeComponent();
         //set current theme to light
-        Application.Current.UserAppTheme = AppTheme.Dark;
         //set the binding context to the student view model
-        BindingContext = new Student();
+
+        //set the school program picker
+        SchoolProgram = new ObservableCollection<String>
+        {
+            "-SELECT-",
+            "School of Engineering",
+            "School of Computer Studies"
+        };
+
+        Courses = new ObservableCollection<String>
+        {
+            "-SELECT-"
+        };
+
+        //set the course picker
+        YearLevel = new ObservableCollection<String>
+        {
+            "-SELECT-",
+            "1st Year",
+            "2nd Year",
+            "3rd Year",
+            "4th Year",
+            "5th Year"
+        };
+
+        BindingContext = this;
+
+
     }
+
 
     private void OnSubmitButtonClick(object sender, EventArgs e)
     {
@@ -105,5 +170,33 @@ public partial class Register : ContentPage
         pickerCourse.SelectedIndex = 0;
         pickerYearLevel.SelectedIndex = 0;
     }
+
+    private void pickerSchoolProgram_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var picker = (Picker)sender;
+        int selectedIndex = picker.SelectedIndex;
+
+
+        Courses.Clear();
+        if (selectedIndex == 1)
+        {
+            Courses.Add("BSCE");
+            Courses.Add("BSCPE");
+            Courses.Add("BSECE");
+            Courses.Add("BSIE");
+            Courses.Add("BSEE");
+            Courses.Add("BSME");
+        }
+        else if (selectedIndex == 2)
+        {
+            Courses.Add("BSIT");
+            Courses.Add("BSCS");
+        }
+        else
+        {
+            Courses.Add("-SELECT-");
+        }
+    }
+
 
 }
