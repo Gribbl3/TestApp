@@ -7,7 +7,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="Register">
-
+    
+    <!--Styles -avoid repitition -->
+    <ContentPage.Resources>
+        <!--Label Style-->
+        <Style x:Key="labelStyle" TargetType="Label">
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="WidthRequest" Value="150"></Setter>
+        </Style>
+        <!--Vertical StackLayout Style-->
+        <Style x:Key="verticalStackLayoutStyle" TargetType="VerticalStackLayout">
+            <Setter Property="Padding" Value="10"></Setter>
+            <Setter Property="Spacing" Value="10"></Setter>
+            <Setter Property="WidthRequest" Value="500"></Setter>
+        </Style>
+        <!--Button Style-->
+        <Style x:Key="buttonStyle" TargetType="Button">
+            <Setter Property="BorderColor" Value="Black"></Setter>
+            <Setter Property="FontAttributes" Value="Bold"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="WidthRequest" Value="100"></Setter>
+        </Style>
+    </ContentPage.Resources>
+    
+    
     <Grid
         ColumnDefinitions="50*, 50*"
         HorizontalOptions="Center"
@@ -25,9 +48,7 @@
 
         <VerticalStackLayout
             Grid.Column="0"
-            Padding="10"
-            Spacing="10"
-            WidthRequest="500">
+            Style="{StaticResource Key=verticalStackLayoutStyle}">
             <!--  BackgroundColor="DarkGoldenrod"  -->
 
 
@@ -36,22 +57,66 @@
 
                 <Label
                     Text="Student ID"
-                    VerticalTextAlignment="Center"
-                    WidthRequest="150" />
+                    Style="{StaticResource labelStyle}" />
 
-                <Border Stroke="black">
+                <Border x:Name="borderStudentID" Stroke="black">
                     <Entry
                         x:Name="txtStudentID"
                         MaxLength="5"
                         Placeholder=""
                         ToolTipProperties.Text="Required. Numeric values only"
+                        Keyboard="Numeric"
                         WidthRequest="300">
                         <Entry.Behaviors>
-                            <toolkit:NumericValidationBehavior MaximumValue="5" x:Name="StudentIDValidator"
-                                                               Flags="ValidateOnAttaching,ValidateOnValueChanged"/>
+                            <toolkit:NumericValidationBehavior x:Name="StudentIDValidator" MaximumValue="5" />
                         </Entry.Behaviors>
-                    </Entry>
+                        <!--<Entry.Triggers>
+                            <DataTrigger
+                                Binding="{Binding Source={x:Reference txtStudentID}, Path=Text.Length}"
+                                TargetType="Border"
+                                Value="0">
+                                <Setter TargetName="borderStudentID" Property="Stroke" Value="#fe3839" />
+                            </DataTrigger>
 
+                            <DataTrigger
+                                Binding="{Binding Source={x:Reference txtStudentID}, Path=Text.Length}"
+                                TargetType="Border"
+                                Value="5">
+                                <Setter TargetName="borderStudentID" Property="Stroke" Value="#57f000" />
+                            </DataTrigger>
+                        </Entry.Triggers>-->
+                    </Entry>
+                    <Border.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference txtStudentID}, Path=Text.Length}"
+                            TargetType="Border"
+                            Value="1">
+                            <Setter TargetName="borderStudentID" Property="Stroke" Value="#fe3839" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference txtStudentID}, Path=Text.Length}"
+                            TargetType="Border"
+                            Value="2">
+                            <Setter TargetName="borderStudentID" Property="Stroke" Value="#fe3839" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference txtStudentID}, Path=Text.Length}"
+                            TargetType="Border"
+                            Value="3">
+                            <Setter TargetName="borderStudentID" Property="Stroke" Value="#fe3839" />
+                        </DataTrigger><DataTrigger
+                            Binding="{Binding Source={x:Reference txtStudentID}, Path=Text.Length}"
+                            TargetType="Border"
+                            Value="4">
+                            <Setter TargetName="borderStudentID" Property="Stroke" Value="#fe3839" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference txtStudentID}, Path=Text.Length}"
+                            TargetType="Border"
+                            Value="5">
+                            <Setter TargetName="borderStudentID" Property="Stroke" Value="#57f000" />
+                        </DataTrigger>
+                    </Border.Triggers>
                 </Border>
             </HorizontalStackLayout>
 
@@ -60,8 +125,7 @@
 
                 <Label
                     Text="First Name"
-                    VerticalTextAlignment="Center"
-                    WidthRequest="150" />
+                    Style="{StaticResource labelStyle}" />
 
                 <Border Stroke="black">
                     <Entry
@@ -77,8 +141,7 @@
 
                 <Label
                     Text="Last Name"
-                    VerticalTextAlignment="Center"
-                    WidthRequest="150" />
+                    Style="{StaticResource labelStyle}"/>
 
                 <Border Stroke="black">
                     <Entry
@@ -94,8 +157,7 @@
 
                 <Label
                     Text="Email"
-                    VerticalTextAlignment="Center"
-                    WidthRequest="150" />
+                    Style="{StaticResource labelStyle}" />
 
                 <Border Stroke="black">
                     <Entry
@@ -111,8 +173,7 @@
 
                 <Label
                     Text="Password"
-                    VerticalTextAlignment="Center"
-                    WidthRequest="150" />
+                    Style="{StaticResource labelStyle}" />
 
                 <Border Stroke="black">
                     <Entry
@@ -133,8 +194,7 @@
 
                 <Label
                     Text="Confirm Password"
-                    VerticalTextAlignment="Center"
-                    WidthRequest="150" />
+                    Style="{StaticResource labelStyle}"/>
 
                 <Border Stroke="black">
                     <Entry
@@ -153,19 +213,15 @@
         <!--  right registration form  -->
 
         <VerticalStackLayout
-            Grid.Row="0"
             Grid.Column="1"
-            Padding="10"
-            Spacing="10"
-            WidthRequest="500">
+            Style="{StaticResource Key=verticalStackLayoutStyle}">
 
             <!--  BackgroundColor="DarkGreen"  -->
 
             <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
                 <Label
                     Text="Gender"
-                    VerticalTextAlignment="Center"
-                    WidthRequest="120" />
+                    Style="{StaticResource labelStyle}" />
                 <RadioButton x:Name="rdoMale" Content="Male" />
                 <RadioButton x:Name="rdoFemale" Content="Female" />
             </HorizontalStackLayout>
@@ -174,8 +230,7 @@
             <HorizontalStackLayout Spacing="10">
                 <Label
                     Text="Birth Date"
-                    VerticalTextAlignment="Center"
-                    WidthRequest="150" />
+                    Style="{StaticResource labelStyle}"/>
                 <Border Stroke="black">
                     <DatePicker x:Name="dateBirthDate" WidthRequest="300" />
                 </Border>
@@ -185,8 +240,7 @@
             <HorizontalStackLayout Spacing="10">
                 <Label
                     Text="Mobile No."
-                    VerticalTextAlignment="Center"
-                    WidthRequest="150" />
+                    Style="{StaticResource labelStyle}" />
                 <Border Stroke="black">
                     <Entry
                         x:Name="txtMobileNumber"
@@ -198,8 +252,7 @@
             <HorizontalStackLayout Spacing="10">
                 <Label
                     Text="City"
-                    VerticalTextAlignment="Center"
-                    WidthRequest="150" />
+                    Style="{StaticResource labelStyle}"/>
                 <Border Stroke="black">
                     <Entry WidthRequest="300" />
                 </Border>
@@ -209,8 +262,7 @@
 
                 <Label
                     Text="School Program"
-                    VerticalTextAlignment="Center"
-                    WidthRequest="150" />
+                    Style="{StaticResource labelStyle}" />
 
                 <Border Stroke="black">
                     <Picker
@@ -231,8 +283,7 @@
 
                 <Label
                     Text="Course"
-                    VerticalTextAlignment="Center"
-                    WidthRequest="150" />
+                    Style="{StaticResource labelStyle}" />
 
                 <Border Stroke="black">
                     <Picker
@@ -248,8 +299,7 @@
 
                 <Label
                     Text="Year Level"
-                    VerticalTextAlignment="Center"
-                    WidthRequest="150" />
+                    Style="{StaticResource labelStyle}" />
 
                 <Border Stroke="black">
                     <Picker
@@ -273,25 +323,17 @@
 
             <Button
                 x:Name="btnSubmit"
-                BackgroundColor="#008fff"
-                BorderColor="Black"
-                Clicked="OnSubmitButtonClick"
-                CornerRadius="12"
-                FontAttributes="Bold"
-                FontSize="15"
                 Text="Submit"
-                WidthRequest="100" />
+                BackgroundColor="#008fff"
+                Clicked="OnSubmitButtonClick"
+                Style="{StaticResource buttonStyle}"/>
 
             <Button
                 x:Name="btnReset"
-                BackgroundColor="#abadaf"
-                BorderColor="Black"
-                Clicked="OnResetButtonClick"
-                CornerRadius="12"
-                FontAttributes="Bold"
-                FontSize="15"
                 Text="Reset"
-                WidthRequest="100" />
+                BackgroundColor="#abadaf"
+                Clicked="OnResetButtonClick"
+                Style="{StaticResource buttonStyle}"/>
 
         </HorizontalStackLayout>
 

@@ -136,6 +136,8 @@ public partial class Register : ContentPage, INotifyPropertyChanged
         txtConfirmPassword.Text = "";
         txtMobileNumber.Text = "";
         txtEmail.Text = "";
+        rdoMale.IsChecked = false;
+        rdoFemale.IsChecked = false;
         pickerSchoolProgram.SelectedIndex = 0;
         pickerCourse.SelectedIndex = 0;
         pickerYearLevel.SelectedIndex = 0;
