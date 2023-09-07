@@ -1,18 +1,10 @@
 namespace DirectoryApp.Pages;
 
-using CommunityToolkit.Maui.Views;
-using DirectoryApp.ViewModel;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using static System.String;
-
-
 public partial class Register : ContentPage, INotifyPropertyChanged
 {
-    //implement the INotifyPropertyChanged interface
-
-
-
     private ObservableCollection<String> _schoolProgram;
     private ObservableCollection<String> _courses;
     private ObservableCollection<String> _yearLevel;
@@ -51,17 +43,11 @@ public partial class Register : ContentPage, INotifyPropertyChanged
 
     public Register()
     {
-
         InitializeComponent();
+        //set current theme to light
+        //set the binding context to the student view model
 
-        //omit the navigation bar 
-        NavigationPage.SetHasNavigationBar(this, false);
-
-        //initialize the back button title
-        NavigationPage.SetBackButtonTitle(this, "Back");
-
-
-        //initialize the school program picker
+        //set the school program picker
         SchoolProgram = new ObservableCollection<String>
         {
             "-SELECT-",
@@ -69,13 +55,12 @@ public partial class Register : ContentPage, INotifyPropertyChanged
             "School of Computer Studies"
         };
 
-        //initialize the course picker
         Courses = new ObservableCollection<String>
         {
             "-SELECT-"
         };
 
-        //initialize the year level picker
+        //set the course picker
         YearLevel = new ObservableCollection<String>
         {
             "-SELECT-",
@@ -86,53 +71,26 @@ public partial class Register : ContentPage, INotifyPropertyChanged
             "5th Year"
         };
 
-        //set the binding context
         BindingContext = this;
 
-        //borderStudentID.SetBinding(Border.StrokeProperty, new Binding("IsValid", source: validationBehaviorStudentID));
 
     }
+
 
     private void OnSubmitButtonClick(object sender, EventArgs e)
     {
-        //bool isValid = ValidateForm(); //call the validate form method
+        bool isValid = ValidateForm(); //call the validate form method
 
-        //if (!isValid)
-        //{
-        //    DisplayAlert("Error", "Please fill in all fields", "OK");
-        //}
-        //else
-        //{
-        //    call the reset form method
+        if (!isValid)
+        {
+            DisplayAlert("Error", "Please fill in all fields", "OK");
+        }
+        else
+        {
+            //call the reset form method
 
-        //    DisplayAlert("Success", "You have successfully registered", "OK");
-        //}
-
-        //call newcontent1 page as popup 
-
-        var popup = new NewContent1(RegisterUser());
-
-        this.ShowPopup(popup);
-    }
-
-    private Student RegisterUser()
-    {
-        Student theStudent = new Student();
-        theStudent.StudentID = int.Parse(txtStudentID.Text);
-        theStudent.FirstName = txtFirstName.Text;
-        theStudent.LastName = txtLastName.Text;
-        theStudent.Email = txtEmail.Text;
-        theStudent.Password = txtPassword.Text;
-        theStudent.ConfirmPassword = txtConfirmPassword.Text;
-        theStudent.Gender = rdoMale.IsChecked ? "Male" : "Female";
-        theStudent.MobileNumber = (int)long.Parse(txtMobileNumber.Text);
-        theStudent.City = txtCity.Text;
-        theStudent.SchoolProgram = pickerSchoolProgram.SelectedItem.ToString();
-        theStudent.Course = pickerCourse.SelectedItem.ToString();
-        theStudent.YearLevel = pickerYearLevel.SelectedItem.ToString();
-        theStudent.BirthDate = dateBirthDate.Date;
-
-        return theStudent;
+            DisplayAlert("Success", "You have successfully registered", "OK");
+        }
     }
 
     private void OnResetButtonClick(object sender, EventArgs e)
@@ -151,52 +109,65 @@ public partial class Register : ContentPage, INotifyPropertyChanged
         if (IsNullOrEmpty(txtStudentID.Text) || IsNullOrEmpty(txtFirstName.Text) ||
             IsNullOrEmpty(txtLastName.Text) || IsNullOrEmpty(txtEmail.Text) ||
             IsNullOrEmpty(txtPassword.Text) || IsNullOrEmpty(txtConfirmPassword.Text) ||
-            IsNullOrEmpty(txtMobileNumber.Text) ||
-            IsNullOrEmpty(txtMobileNumber.Text) || (!rdoFemale.IsChecked) && (!rdoMale.IsChecked))
+            IsNullOrEmpty(txtMobileNumber.Text))
         {
             return false;
         }
-
-        if (!Equals(txtPassword.Text, txtConfirmPassword.Text))
-        {
-            return false;
-        }
-
+        //else if (Equals(txtPassword.Text, txtConfirmPassword.Text))
+        //{
+        //    return false;
+        //}
+        //else
+        //{
+        //    return true;
+        //}
         return true;
-
 
     }
 
     private void ResetForm()
     {
         //call all variables and set them to empty
-        //txtStudentID.Text = "";
-        //txtFirstName.Text = "";
-        //txtLastName.Text = "";
-        //txtEmail.Text = "";
-        //txtPassword.Text = "";
-        //txtConfirmPassword.Text = "";
-        //txtMobileNumber.Text = "";
-        //txtEmail.Text = "";
-        //rdoMale.IsChecked = false;
-        //rdoFemale.IsChecked = false;
-        //pickerSchoolProgram.SelectedIndex = 0;
-        //pickerCourse.SelectedIndex = 0;
-        //pickerYearLevel.SelectedIndex = 0;
-        Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault(new Register());
-        Application.Current.MainPage.Navigation.PushAsync(new Register(), false);
-        Application.Current.MainPage.Navigation.RemovePage(this);
+        txtStudentID.Text = "";
+        txtFirstName.Text = "";
+        txtLastName.Text = "";
+        txtEmail.Text = "";
+        txtPassword.Text = "";
+        txtConfirmPassword.Text = "";
+        txtMobileNumber.Text = "";
+        txtEmail.Text = "";
+        rdoMale.IsChecked = false;
+        rdoFemale.IsChecked = false;
+        pickerSchoolProgram.SelectedIndex = 0;
+        pickerCourse.SelectedIndex = 0;
+        pickerYearLevel.SelectedIndex = 0;
 
     }
 
+    private void txtPassword_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        //if (!string.IsNullOrEmpty(txtPassword.Text) && txtPassword.Text.Length < 8)
+        //{
+        //    // Display an error message or take appropriate action
+        //    // You can also disable a button or perform other validation checks here
+        //    // For example, you can set an error label's text:
+        //    errorLabel.Text = "Enter at least 8 digits";
+        //}
+        //else
+        //{
+        //    // Clear the error message if the input is valid
+        //    errorLabel.Text = string.Empty;
+        //}
 
+        errorLabel.IsVisible = !string.IsNullOrEmpty(errorLabel.Text);
+        errorLabel.Text = !string.IsNullOrEmpty(txtPassword.Text) && txtPassword.Text.Length < 8 ? "Enter at least 8 digits" : string.Empty;
+    }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
 
-        // Set the default selected item index by 0
-        //-1 corresponds to "No Selection", so we don't want that
+        // Set the default selected item by index
         pickerSchoolProgram.SelectedIndex = 0; // 0 corresponds to "-SELECT-"
         pickerCourse.SelectedIndex = 0;
         pickerYearLevel.SelectedIndex = 0;
@@ -204,16 +175,11 @@ public partial class Register : ContentPage, INotifyPropertyChanged
 
     private void pickerSchoolProgram_SelectedIndexChanged(object sender, EventArgs e)
     {
-        //set the course picker items based on the selected school program
-
         var picker = (Picker)sender;
         int selectedIndex = picker.SelectedIndex;
 
-        //clear the courses picker
+
         Courses.Clear();
-
-        //add the courses based on the selected school program
-
         if (selectedIndex == 1)
         {
             Courses.Add("BSCE");

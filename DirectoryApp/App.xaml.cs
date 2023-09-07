@@ -8,18 +8,10 @@ namespace DirectoryApp
         {
             InitializeComponent();
 
-            //sets the default theme to light
-            Application.Current.UserAppTheme = AppTheme.Light;
-
-            //sets the main page to the main content page
-            MainPage = new NavigationPage(new MainContentPage());
-
+            MainPage = new MainContentPage();
+            Application.Current.UserAppTheme = AppTheme.Light; //sets the default theme to light
         }
-
-
     }
-
-
 
 
 }
