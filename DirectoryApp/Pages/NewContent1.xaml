@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="DirectoryApp.Pages.NewContent1"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    <Grid ColumnDefinitions="50*,50*" VerticalOptions="Center"
+          HorizontalOptions="Center">
+
+        <VerticalStackLayout Grid.Column="0" Spacing="10">
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Student ID" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding StudentID}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="First Name" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding FirstName}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Last Name" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding LastName}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Email" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding Email}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Password" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding Password}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Confirm Password" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding ConfirmPassword}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="1" Spacing="10">
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Gender" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding Gender}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Mobile Number" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding MobileNumber}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="City" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding City}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="School Program" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding SchoolProgram}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Course" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding Course}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Year Level" />
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding YearLevel}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</toolkit:Popup>

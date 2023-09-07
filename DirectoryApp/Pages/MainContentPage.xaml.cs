@@ -5,6 +5,7 @@ public partial class MainContentPage : ContentPage
     public MainContentPage()
     {
         InitializeComponent();
+        NavigationPage.SetHasNavigationBar(this, false);
     }
 
     private void OnButtonClicked(object sender, EventArgs e)
@@ -46,7 +47,7 @@ public partial class MainContentPage : ContentPage
 
     private async void OnLabelTextTapped(object sender, EventArgs e)
     {
-        await Navigation.PushModalAsync(new Register());
+        await Navigation.PushAsync(new Register());
     }
 
 
