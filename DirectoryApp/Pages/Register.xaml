@@ -77,7 +77,7 @@
                             <toolkit:CharactersValidationBehavior
                                 x:Name="validationBehaviorStudentID"
                                 CharacterType="Digit"
-                                Flags="ValidateOnUnfocusing"
+                                Flags="ValidateOnValueChanged,ValidateOnUnfocusing"
                                 InvalidStyle="{StaticResource invalidEntryStyle}"
                                 MinimumCharacterTypeCount="5"
                                 ValidStyle="{StaticResource validEntryStyle}" />
@@ -90,14 +90,6 @@
                             Value="False">
                             <Setter Property="Stroke" Value="red" />
                         </DataTrigger>
-
-                        <!--<DataTrigger
-                            TargetType="Border"
-                            Binding="{Binding Source={x:Reference validationBehaviorStudentID}, Path=Flags.ValidateOnUnfocusing}"
-                            Value="True">
-                            <Setter Property="Stroke" Value="Green" />
-                        </DataTrigger>-->
-
                     </Border.Triggers>
                 </Border>
             </HorizontalStackLayout>
@@ -106,7 +98,6 @@
             <HorizontalStackLayout Spacing="10">
 
                 <Label Style="{StaticResource labelStyle}" Text="First Name" />
-
                 <Border Stroke="black">
                     <Entry
                         x:Name="txtFirstName"
@@ -117,7 +108,7 @@
                         <Entry.Behaviors>
                             <toolkit:TextValidationBehavior
                                 x:Name="validateBehaviorFirstName"
-                                Flags="ValidateOnUnfocusing"
+                                Flags="ValidateOnValueChanged,ValidateOnUnfocusing"
                                 InvalidStyle="{StaticResource invalidEntryStyle}"
                                 MaximumLength="100"
                                 MinimumLength="1"
@@ -151,7 +142,7 @@
                         <Entry.Behaviors>
                             <toolkit:TextValidationBehavior
                                 x:Name="validateBehaviorLastName"
-                                Flags="ValidateOnUnfocusing"
+                                Flags="ValidateOnValueChanged,ValidateOnUnfocusing"
                                 InvalidStyle="{StaticResource invalidEntryStyle}"
                                 MaximumLength="100"
                                 MinimumLength="1"
@@ -184,7 +175,7 @@
                         <Entry.Behaviors>
                             <toolkit:EmailValidationBehavior
                                 x:Name="validateBehaviorEmail"
-                                Flags="ValidateOnUnfocusing"
+                                Flags="ValidateOnValueChanged,ValidateOnUnfocusing"
                                 InvalidStyle="{StaticResource invalidEntryStyle}"
                                 ValidStyle="{StaticResource validEntryStyle}" />
                         </Entry.Behaviors>
@@ -219,7 +210,7 @@
                                 x:Name="validateBehaviorPassword"
                                 CharacterType="Alphanumeric"
                                 DecorationFlags="NullToEmpty"
-                                Flags="ValidateOnUnfocusing"
+                                Flags="ValidateOnValueChanged,ValidateOnUnfocusing"
                                 MinimumCharacterTypeCount="8" />
                         </Entry.Behaviors>
                     </Entry>
@@ -247,14 +238,13 @@
                         ClearButtonVisibility="WhileEditing"
                         IsPassword="True"
                         Placeholder="********"
+                        Unfocused="txtConfirmPassword_Unfocused"
                         WidthRequest="300">
                         <Entry.Behaviors>
-                            <toolkit:CharactersValidationBehavior
+                            <toolkit:RequiredStringValidationBehavior
                                 x:Name="validateBehaviorConfirmPassword"
-                                CharacterType="Alphanumeric"
-                                DecorationFlags="NullToEmpty"
-                                Flags="ValidateOnUnfocusing"
-                                MinimumCharacterTypeCount="8" />
+                                Flags="ValidateOnValueChanged,ValidateOnUnfocusing"
+                                RequiredString="{Binding Source={x:Reference txtPassword}, Path=Text}" />
                         </Entry.Behaviors>
                     </Entry>
                     <Border.Triggers>
@@ -265,9 +255,18 @@
                             <Setter Property="Stroke" Value="Red" />
                         </DataTrigger>
                     </Border.Triggers>
-                </Border>
-            </HorizontalStackLayout>
 
+                </Border>
+
+            </HorizontalStackLayout>
+            <Label
+                x:Name="lblPasswordNotMatch"
+                HorizontalOptions="EndAndExpand"
+                IsVisible="False"
+                Style="{StaticResource labelStyle}"
+                Text="Password does not match"
+                TextColor="Red"
+                WidthRequest="200" />
         </VerticalStackLayout>
 
 
@@ -286,7 +285,7 @@
 
             <HorizontalStackLayout Spacing="10">
                 <Label Style="{StaticResource labelStyle}" Text="Birth Date" />
-                <Border Stroke="black">
+                <Border x:Name="borderDatePicker" Stroke="black">
                     <DatePicker x:Name="dateBirthDate" WidthRequest="300" />
                 </Border>
             </HorizontalStackLayout>
@@ -327,27 +326,9 @@
                 <Border Stroke="black">
                     <Entry
                         x:Name="txtCity"
+                        toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference pickerSchoolProgram}"
                         Placeholder="Optional*"
-                        WidthRequest="300">
-                        <Entry.Behaviors>
-                            <toolkit:CharactersValidationBehavior
-                                x:Name="validateBehaviorCity"
-                                CharacterType="Letter"
-                                DecorationFlags="NullToEmpty"
-                                Flags="ValidateOnUnfocusing"
-                                InvalidStyle="{StaticResource invalidEntryStyle}"
-                                MinimumCharacterTypeCount="2"
-                                ValidStyle="{StaticResource validEntryStyle}" />
-                        </Entry.Behaviors>
-                    </Entry>
-                    <Border.Triggers>
-                        <DataTrigger
-                            Binding="{Binding Source={x:Reference validateBehaviorCity}, Path=IsValid}"
-                            TargetType="Border"
-                            Value="False">
-                            <Setter Property="Stroke" Value="Red" />
-                        </DataTrigger>
-                    </Border.Triggers>
+                        WidthRequest="300" />
                 </Border>
             </HorizontalStackLayout>
 
@@ -355,11 +336,12 @@
 
                 <Label Style="{StaticResource labelStyle}" Text="School Program" />
 
-                <Border Stroke="black">
+                <Border x:Name="borderSchoolProgram" Stroke="black">
                     <Picker
                         x:Name="pickerSchoolProgram"
                         ItemsSource="{Binding SchoolProgram}"
                         SelectedIndexChanged="pickerSchoolProgram_SelectedIndexChanged"
+                        Unfocused="pickerSchoolProgram_Unfocused"
                         WidthRequest="300" />
                 </Border>
 
@@ -369,13 +351,14 @@
 
                 <Label Style="{StaticResource labelStyle}" Text="Course" />
 
-                <Border Stroke="black">
+                <Border x:Name="borderCourse" Stroke="black">
                     <Picker
                         x:Name="pickerCourse"
                         ItemsSource="{Binding Courses}"
+                        SelectedIndexChanged="pickerCourse_SelectedIndexChanged"
+                        Unfocused="pickerCourse_Unfocused"
                         WidthRequest="300" />
                 </Border>
-
             </HorizontalStackLayout>
 
 
@@ -383,22 +366,13 @@
 
                 <Label Style="{StaticResource labelStyle}" Text="Year Level" />
 
-                <Border Stroke="black">
+                <Border x:Name="borderYearLevel" Stroke="black">
                     <Picker
                         x:Name="pickerYearLevel"
                         ItemsSource="{Binding YearLevel}"
-                        MinimumWidthRequest="300"
-                        SelectedIndex="0"
+                        SelectedIndexChanged="pickerYearLevel_SelectedIndexChanged"
+                        Unfocused="pickerYearLevel_Unfocused"
                         WidthRequest="300" />
-
-                    <Border.Triggers>
-                        <DataTrigger
-                            Binding="{Binding Source={x:Reference pickerYearLevel}, Path=SelectedIndex}"
-                            TargetType="Border"
-                            Value="0">
-                            <Setter Property="Stroke" Value="Red" />
-                        </DataTrigger>
-                    </Border.Triggers>
                 </Border>
 
             </HorizontalStackLayout>

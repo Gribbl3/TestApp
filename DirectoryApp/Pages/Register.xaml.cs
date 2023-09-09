@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using static System.String;
 
+//things to do
+//figure out how to target all pickers selectedIndexChanged event
 
 public partial class Register : ContentPage, INotifyPropertyChanged
 {
@@ -16,6 +18,9 @@ public partial class Register : ContentPage, INotifyPropertyChanged
     private ObservableCollection<String> _schoolProgram;
     private ObservableCollection<String> _courses;
     private ObservableCollection<String> _yearLevel;
+    private bool pickerSchoolProgramHasSelected = false;
+    private bool pickerCourseHasSelected = false;
+    private bool pickerYearLvlHasSelected = false;
 
     public ObservableCollection<String> SchoolProgram
     {
@@ -66,7 +71,12 @@ public partial class Register : ContentPage, INotifyPropertyChanged
         {
             "-SELECT-",
             "School of Engineering",
-            "School of Computer Studies"
+            "School of Computer Studies",
+            "School of Law",
+            "School of Arts and Sciences",
+            "School of Business and Management",
+            "School of Education",
+            "School of Allied Medical Sciences"
         };
 
         //initialize the course picker
@@ -86,6 +96,7 @@ public partial class Register : ContentPage, INotifyPropertyChanged
             "5th Year"
         };
 
+        dateBirthDate.DateSelected += OnDateSelected;
         //set the binding context
         BindingContext = this;
 
@@ -93,46 +104,55 @@ public partial class Register : ContentPage, INotifyPropertyChanged
 
     }
 
+    private void OnDateSelected(object sender, DateChangedEventArgs e)
+    {
+        //set the date label to the selected date
+        DateTime selectedDate = e.NewDate;
+
+        if (selectedDate == DateTime.Today)
+        {
+            borderDatePicker.Stroke = Colors.Red;
+        }
+        else
+        {
+            borderDatePicker.Stroke = Colors.Black;
+        }
+    }
+
     private void OnSubmitButtonClick(object sender, EventArgs e)
     {
-        //bool isValid = ValidateForm(); //call the validate form method
 
-        //if (!isValid)
-        //{
-        //    DisplayAlert("Error", "Please fill in all fields", "OK");
-        //}
-        //else
-        //{
-        //    call the reset form method
-
-        //    DisplayAlert("Success", "You have successfully registered", "OK");
-        //}
+        if (!ValidateForm())
+        {
+            DisplayAlert("Error", "Please fill in all fields and ensure that the passwords match.", "OK");
+            return;
+        }
 
         //call newcontent1 page as popup 
 
-        var popup = new NewContent1(RegisterUser());
+        var popup = new RegisterPopup(RegisterUser());
 
         this.ShowPopup(popup);
     }
 
     private Student RegisterUser()
     {
-        Student theStudent = new Student();
-        theStudent.StudentID = int.Parse(txtStudentID.Text);
-        theStudent.FirstName = txtFirstName.Text;
-        theStudent.LastName = txtLastName.Text;
-        theStudent.Email = txtEmail.Text;
-        theStudent.Password = txtPassword.Text;
-        theStudent.ConfirmPassword = txtConfirmPassword.Text;
-        theStudent.Gender = rdoMale.IsChecked ? "Male" : "Female";
-        theStudent.MobileNumber = (int)long.Parse(txtMobileNumber.Text);
-        theStudent.City = txtCity.Text;
-        theStudent.SchoolProgram = pickerSchoolProgram.SelectedItem.ToString();
-        theStudent.Course = pickerCourse.SelectedItem.ToString();
-        theStudent.YearLevel = pickerYearLevel.SelectedItem.ToString();
-        theStudent.BirthDate = dateBirthDate.Date;
-
-        return theStudent;
+        return new Student
+        {
+            StudentID = int.Parse(txtStudentID.Text),
+            FirstName = txtFirstName.Text,
+            LastName = txtLastName.Text,
+            Email = txtEmail.Text,
+            Password = txtPassword.Text,
+            ConfirmPassword = txtConfirmPassword.Text,
+            Gender = rdoMale.IsChecked ? "Male" : "Female",
+            BirthDate = dateBirthDate.Date.ToString("dd/MM/yyyy"),
+            MobileNumber = txtMobileNumber.Text,
+            City = txtCity.Text,
+            SchoolProgram = pickerSchoolProgram.SelectedItem.ToString(),
+            Course = pickerCourse.SelectedItem.ToString(),
+            YearLevel = pickerYearLevel.SelectedItem.ToString(),
+        };
     }
 
     private void OnResetButtonClick(object sender, EventArgs e)
@@ -148,26 +168,26 @@ public partial class Register : ContentPage, INotifyPropertyChanged
         //check if phone number is valid
         //check if username is unique
 
-        if (IsNullOrEmpty(txtStudentID.Text) || IsNullOrEmpty(txtFirstName.Text) ||
-            IsNullOrEmpty(txtLastName.Text) || IsNullOrEmpty(txtEmail.Text) ||
-            IsNullOrEmpty(txtPassword.Text) || IsNullOrEmpty(txtConfirmPassword.Text) ||
-            IsNullOrEmpty(txtMobileNumber.Text) ||
-            IsNullOrEmpty(txtMobileNumber.Text) || (!rdoFemale.IsChecked) && (!rdoMale.IsChecked))
-        {
-            return false;
-        }
+        bool areAllFieldsFilled = !IsNullOrWhiteSpace(txtStudentID.Text) &&
+                                  !IsNullOrWhiteSpace(txtFirstName.Text) &&
+                                  !IsNullOrWhiteSpace(txtLastName.Text) &&
+                                  !IsNullOrWhiteSpace(txtEmail.Text) &&
+                                  !IsNullOrWhiteSpace(txtPassword.Text) &&
+                                  !IsNullOrWhiteSpace(txtConfirmPassword.Text) &&
+                                  (rdoFemale.IsChecked || rdoMale.IsChecked) &&
+                                  !IsNullOrWhiteSpace(txtMobileNumber.Text) &&
+                                  !IsNullOrWhiteSpace(txtCity.Text) &&
+                                  !IsNullOrWhiteSpace(pickerSchoolProgram.SelectedItem.ToString()) &&
+                                  !IsNullOrWhiteSpace(pickerCourse.SelectedItem.ToString()) &&
+                                  !IsNullOrWhiteSpace(pickerYearLevel.SelectedItem.ToString());
 
-        if (!Equals(txtPassword.Text, txtConfirmPassword.Text))
-        {
-            return false;
-        }
+        bool arePasswordsMatching = txtPassword.Text == txtConfirmPassword.Text;
 
-        return true;
-
+        return areAllFieldsFilled && arePasswordsMatching;
 
     }
 
-    private void ResetForm()
+    private async void ResetForm()
     {
         //call all variables and set them to empty
         //txtStudentID.Text = "";
@@ -183,10 +203,26 @@ public partial class Register : ContentPage, INotifyPropertyChanged
         //pickerSchoolProgram.SelectedIndex = 0;
         //pickerCourse.SelectedIndex = 0;
         //pickerYearLevel.SelectedIndex = 0;
-        Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault(new Register());
-        Application.Current.MainPage.Navigation.PushAsync(new Register(), false);
-        Application.Current.MainPage.Navigation.RemovePage(this);
 
+        //refactored
+        //Entry[] entries = { txtStudentID, txtFirstName, txtLastName, txtEmail, txtPassword, txtConfirmPassword, txtMobileNumber, txtCity };
+        //foreach (var entry in entries)
+        //{
+        //    entry.Text = string.Empty;
+        //}
+
+        //rdoFemale.IsChecked = false;
+        //rdoMale.IsChecked = false;
+
+        //dateBirthDate.Date = DateTime.Today;
+
+        //pickerSchoolProgram.SelectedIndex = 0;
+        //pickerCourse.SelectedIndex = 0;
+        //pickerYearLevel.SelectedIndex = 0;
+
+        Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault(new Register());
+        await Application.Current.MainPage.Navigation.PushAsync(new Register(), false);
+        Application.Current.MainPage.Navigation.RemovePage(this);
     }
 
 
@@ -209,30 +245,158 @@ public partial class Register : ContentPage, INotifyPropertyChanged
         var picker = (Picker)sender;
         int selectedIndex = picker.SelectedIndex;
 
-        //clear the courses picker
-        Courses.Clear();
-
-        //add the courses based on the selected school program
-
-        if (selectedIndex == 1)
+        if (selectedIndex == 0)
         {
-            Courses.Add("BSCE");
-            Courses.Add("BSCPE");
-            Courses.Add("BSECE");
-            Courses.Add("BSIE");
-            Courses.Add("BSEE");
-            Courses.Add("BSME");
-        }
-        else if (selectedIndex == 2)
-        {
-            Courses.Add("BSIT");
-            Courses.Add("BSCS");
+            pickerSchoolProgramHasSelected = false;
         }
         else
         {
-            Courses.Add("-SELECT-");
+            pickerSchoolProgramHasSelected = true;
+        }
+        //clear the courses picker
+        Courses.Clear();
+        Courses.Add("-SELECT-");
+        //add the courses based on the selected school program
+
+        //"School of Engineering", 1
+        if (selectedIndex == 1)
+        {
+            Courses.Add("Bachelor of Science in Civil Engineering");
+            Courses.Add("Bachelor of Science in Computer Engineering");
+            Courses.Add("Bachelor of Science in Electrical Engineering");
+            Courses.Add("Bachelor of Science in Electronics Engineering");
+            Courses.Add("Bachelor of Science in Industrial Engineering");
+            Courses.Add("Bachelor of Science in Mechanical Engineering");
+        }
+        //"School of Computer Studies", 2
+        else if (selectedIndex == 2)
+        {
+            Courses.Add("Bachelor of Science in Computer Science");
+            Courses.Add("Bachelor of Science in Information Technology");
+            Courses.Add("Bachelor of Science in Information Systems");
+        }
+        //"School of Law", 3
+        else if (selectedIndex == 3)
+        {
+            Courses.Add("Bachelor of Laws");
+        }
+        //"School of Arts and Sciences",4
+        else if (selectedIndex == 4)
+        {
+            Courses.Add("Bachelor of Arts in Communication");
+            Courses.Add("Bachelor of Arts in Marketing Communication");
+            Courses.Add("Bachelor of Arts in Journalism");
+            Courses.Add("Bachelor of Arts in English Language Studies");
+            Courses.Add("Bachelor of Science in Biology major in Medical Biology");
+            Courses.Add("Bachelor of Science in Biology major in Microbiology");
+            Courses.Add("Bachelor of Science in Psychology");
+            Courses.Add("Bachelor of Library and Information Science");
+            Courses.Add("Bachelor of Arts in International Studies");
+            Courses.Add("Bachelor of Arts in Political Science");
+        }
+        //"School of Business and Management",5
+        else if (selectedIndex == 5)
+        {
+            Courses.Add("Bachelor of Science in Accountancy");
+            Courses.Add("Bachelor of Science in Management Accounting");
+            Courses.Add("Bachelor of Science in Business Administration – Financial Management");
+            Courses.Add("Bachelor of Science in Entrepreneurship");
+            Courses.Add("Bachelor of Science in Business Administration – Operation Management");
+            Courses.Add("Bachelor of Science in Business Administration – Marketing Management");
+            Courses.Add("Bachelor of Science in Business Administration – Human Resource Development Management");
+            Courses.Add("Bachelor of Science in Hospitality Management major in Food and Beverage");
+            Courses.Add("Bachelor of Science in Tourism Management");
+
+        }
+        //"School of Education", 6
+        else if (selectedIndex == 6)
+        {
+            Courses.Add("Bachelor of Elementary Education");
+            Courses.Add("Bachelor of Early Childhood Education");
+            Courses.Add("Bachelor of Physical Education");
+            Courses.Add("Bachelor of Secondary Education Major in English");
+            Courses.Add("Bachelor of Secondary Education Major in Filipino");
+            Courses.Add("Bachelor of Secondary Education Major in Mathematics");
+            Courses.Add("Bachelor of Secondary Education Major in Science");
+            Courses.Add("Bachelor of Special Needs Education-Generalist");
+            Courses.Add("Bachelor of Special Needs Education major in Early Childhood Education");
+            Courses.Add("Bachelor of Special Needs Education major in Elementary School Teaching");
+        }
+        //"School of Allied Medical Sciences" 7
+        else if (selectedIndex == 7)
+        {
+            Courses.Add("Bachelor of Science in Nursing");
+        }
+        else
+        {
+            return;
+        }
+
+
+        //di ko kabalo mo refactor ani huhu
+
+    }
+
+    private void txtConfirmPassword_Unfocused(object sender, FocusEventArgs e)
+    {
+        lblPasswordNotMatch.IsVisible = txtPassword.Text != txtConfirmPassword.Text;
+    }
+
+
+    private void pickerYearLevel_Unfocused(object sender, FocusEventArgs e)
+    {
+        if (!pickerYearLvlHasSelected)
+        {
+            borderYearLevel.Stroke = Colors.Red;
+        }
+        else
+        {
+            borderYearLevel.Stroke = Colors.Black;
         }
     }
 
+    private void pickerYearLevel_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var picker = (Picker)sender;
+        int selectedIndex = picker.SelectedIndex;
+
+        if (selectedIndex == 0)
+        {
+            pickerYearLvlHasSelected = false;
+        }
+        else
+        {
+            pickerYearLvlHasSelected = true;
+        }
+    }
+
+    private void pickerCourse_Unfocused(object sender, FocusEventArgs e)
+    {
+        if (!pickerCourseHasSelected)
+        {
+            borderCourse.Stroke = Colors.Red;
+        }
+        else
+        {
+            borderCourse.Stroke = Colors.Black;
+        }
+    }
+
+    private void pickerCourse_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var picker = (Picker)sender;
+        int selectedIndex = picker.SelectedIndex;
+
+        if (selectedIndex == 0)
+        {
+            pickerCourseHasSelected = false;
+        }
+        else
+        {
+            pickerCourseHasSelected = true;
+        }
+    }
+
+    private void pickerSchoolProgram_Unfocused(object sender, FocusEventArgs e) => borderSchoolProgram.Stroke = pickerSchoolProgramHasSelected ? Colors.Black : Colors.Red;
 
 }

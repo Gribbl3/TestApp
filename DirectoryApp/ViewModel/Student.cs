@@ -13,8 +13,8 @@ namespace DirectoryApp.ViewModel
         private string _password;
         private string _confirmPassword;
         private string _gender;
-        private DateTime _birthDate;
-        private int _mobileNumber;
+        private string _birthDate;
+        private string _mobileNumber;
         private string _city;
         private string _schoolProgram;
         private string _course;
@@ -91,7 +91,7 @@ namespace DirectoryApp.ViewModel
             }
         }
 
-        public DateTime BirthDate
+        public string BirthDate
         {
             get => _birthDate;
             set
@@ -101,7 +101,7 @@ namespace DirectoryApp.ViewModel
             }
         }
 
-        public int MobileNumber
+        public string MobileNumber
         {
             get => _mobileNumber;
             set

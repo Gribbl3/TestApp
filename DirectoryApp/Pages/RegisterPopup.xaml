@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="DirectoryApp.Pages.RegisterPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <!--  implement styles  -->
+
+
+    <Grid
+        Margin="15"
+        ColumnDefinitions="*,*"
+        ColumnSpacing="20"
+        VerticalOptions="Center"
+        HorizontalOptions="Center">
+
+
+        <VerticalStackLayout
+            Grid.Column="0"
+            Spacing="10"
+            WidthRequest="300">
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    Text="Student ID:"
+                    WidthRequest="150" />
+                <Label Text="{Binding StudentID}" WidthRequest="150"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    Text="First Name:"
+                    WidthRequest="150" />
+                <Label Text="{Binding FirstName}" WidthRequest="150"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    Text="Last Name:"
+                    WidthRequest="150" />
+                <Label Text="{Binding LastName}" WidthRequest="150"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    Text="Email:"
+                    WidthRequest="150" />
+                <Label Text="{Binding Email}" WidthRequest="150"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    Text="Password:"
+                    WidthRequest="150" />
+                <Label Text="{Binding Password}" WidthRequest="150"/>
+            </HorizontalStackLayout>
+
+
+
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+            Grid.Column="1"
+            Spacing="10"
+            WidthRequest="300">
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    Text="Gender"
+                    WidthRequest="150" />
+                <Label Text="{Binding Gender}" WidthRequest="150"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    Text="Birth Date"
+                    WidthRequest="150" />
+                <Label Text="{Binding BirthDate}" WidthRequest="150"/>
+            </HorizontalStackLayout>
+
+
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    Text="Mobile Number:"
+                    WidthRequest="150" />
+                <Label Text="{Binding MobileNumber}" WidthRequest="150"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    Text="City:"
+                    WidthRequest="150" />
+                <Label Text="{Binding City}" WidthRequest="150"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    Text="School Program:"
+                    WidthRequest="150" />
+                <Label Text="{Binding SchoolProgram}" WidthRequest="150"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    Text="Course:"
+                    WidthRequest="150" />
+                <Label Text="{Binding Course}" WidthRequest="150"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    Text="Year Level:"
+                    WidthRequest="150" />
+                <Label Text="{Binding YearLevel}" WidthRequest="150"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</toolkit:Popup>
