@@ -5,7 +5,9 @@
     x:Class="DirectoryApp.Pages.Register"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+>
 
     <!--  Styles -avoid repitition  -->
     <ContentPage.Resources>
@@ -29,18 +31,30 @@
         </Style>
 
         <!--  Entry Validation Color  -->
-        <Style x:Key="validEntryStyle" TargetType="Entry">
-            <Setter Property="TextColor" Value="green" />
+
+
+        <Style TargetType="Image">
+            <Setter Property="WidthRequest" Value="25" />
+            <Setter Property="WidthRequest" Value="20" />
         </Style>
 
-        <Style x:Key="invalidEntryStyle" TargetType="Entry">
-            <Setter Property="TextColor" Value="red" />
+        <Style TargetType="Entry">
+            <Setter Property="WidthRequest" Value="250" />
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="WidthRequest" Value="250" />
+        </Style>
+
+        <Style TargetType="Picker">
+            <Setter Property="WidthRequest" Value="250" />
         </Style>
 
     </ContentPage.Resources>
 
 
     <Grid
+        Margin="10"
         ColumnDefinitions="50*, 50*"
         HorizontalOptions="Center"
         RowDefinitions="80*, 20*"
@@ -53,10 +67,7 @@
         <!--  add comments each label and entry for documentation  -->
 
 
-        <VerticalStackLayout
-            Grid.Column="0"
-            Margin="0,0,0,20"
-            Style="{StaticResource Key=verticalStackLayoutStyle}">
+        <VerticalStackLayout Grid.Column="0" Style="{StaticResource Key=verticalStackLayoutStyle}">
 
 
 
@@ -71,27 +82,43 @@
                         Keyboard="Numeric"
                         MaxLength="5"
                         Placeholder=""
-                        ToolTipProperties.Text="Required. Numeric values only"
-                        WidthRequest="300">
+                        ToolTipProperties.Text="Required. Numeric values only">
                         <Entry.Behaviors>
                             <toolkit:CharactersValidationBehavior
-                                x:Name="validationBehaviorStudentID"
+                                x:Name="validateBehaviorStudentID"
                                 CharacterType="Digit"
-                                Flags="ValidateOnValueChanged,ValidateOnUnfocusing"
-                                InvalidStyle="{StaticResource invalidEntryStyle}"
-                                MinimumCharacterTypeCount="5"
-                                ValidStyle="{StaticResource validEntryStyle}" />
+                                Flags="ValidateOnValueChanged"
+                                MinimumCharacterTypeCount="5" />
                         </Entry.Behaviors>
                     </Entry>
                     <Border.Triggers>
                         <DataTrigger
-                            Binding="{Binding Source={x:Reference validationBehaviorStudentID}, Path=IsValid}"
+                            Binding="{Binding Source={x:Reference validateBehaviorStudentID}, Path=IsValid}"
                             TargetType="Border"
                             Value="False">
                             <Setter Property="Stroke" Value="red" />
                         </DataTrigger>
                     </Border.Triggers>
                 </Border>
+
+                <Image>
+                    <Image.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorStudentID}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="True">
+                            <Setter Property="Source" Value="check.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorStudentID}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="false">
+                            <Setter Property="Source" Value="x_mark.png" />
+
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
+
             </HorizontalStackLayout>
 
 
@@ -104,15 +131,13 @@
                         toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference txtLastName}"
                         Placeholder=""
                         ToolTipProperties.Text="Required"
-                        WidthRequest="300">
+                        WidthRequest="250">
                         <Entry.Behaviors>
                             <toolkit:TextValidationBehavior
                                 x:Name="validateBehaviorFirstName"
-                                Flags="ValidateOnValueChanged,ValidateOnUnfocusing"
-                                InvalidStyle="{StaticResource invalidEntryStyle}"
+                                Flags="ValidateOnValueChanged"
                                 MaximumLength="100"
-                                MinimumLength="1"
-                                ValidStyle="{StaticResource validEntryStyle}" />
+                                MinimumLength="1" />
                         </Entry.Behaviors>
                     </Entry>
                     <Border.Triggers>
@@ -121,10 +146,27 @@
                             TargetType="Border"
                             Value="false">
                             <Setter Property="Stroke" Value="Red" />
-
                         </DataTrigger>
                     </Border.Triggers>
                 </Border>
+
+                <Image>
+                    <Image.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorFirstName}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="True">
+                            <Setter Property="Source" Value="check.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorFirstName}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="false">
+                            <Setter Property="Source" Value="x_mark.png" />
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
+
             </HorizontalStackLayout>
 
 
@@ -138,12 +180,11 @@
                         toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference txtEmail}"
                         Placeholder=""
                         ToolTipProperties.Text="Required"
-                        WidthRequest="300">
+                        WidthRequest="250">
                         <Entry.Behaviors>
                             <toolkit:TextValidationBehavior
                                 x:Name="validateBehaviorLastName"
-                                Flags="ValidateOnValueChanged,ValidateOnUnfocusing"
-                                InvalidStyle="{StaticResource invalidEntryStyle}"
+                                Flags="ValidateOnValueChanged"
                                 MaximumLength="100"
                                 MinimumLength="1"
                                 ValidStyle="{StaticResource validEntryStyle}" />
@@ -158,6 +199,23 @@
                         </DataTrigger>
                     </Border.Triggers>
                 </Border>
+
+                <Image>
+                    <Image.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorLastName}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="True">
+                            <Setter Property="Source" Value="check.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorLastName}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="false">
+                            <Setter Property="Source" Value="x_mark.png" />
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
             </HorizontalStackLayout>
 
 
@@ -170,13 +228,11 @@
                         x:Name="txtEmail"
                         toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference txtPassword}"
                         Placeholder=""
-                        ToolTipProperties.Text="Required"
-                        WidthRequest="300">
+                        ToolTipProperties.Text="Required">
                         <Entry.Behaviors>
                             <toolkit:EmailValidationBehavior
                                 x:Name="validateBehaviorEmail"
                                 Flags="ValidateOnValueChanged,ValidateOnUnfocusing"
-                                InvalidStyle="{StaticResource invalidEntryStyle}"
                                 ValidStyle="{StaticResource validEntryStyle}" />
                         </Entry.Behaviors>
                     </Entry>
@@ -189,6 +245,25 @@
                         </DataTrigger>
                     </Border.Triggers>
                 </Border>
+
+                <Image>
+                    <Image.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorEmail}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="True">
+
+                            <Setter Property="Source" Value="check.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorEmail}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="false">
+                            <Setter Property="Source" Value="x_mark.png" />
+
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
             </HorizontalStackLayout>
 
 
@@ -203,14 +278,13 @@
                         ClearButtonVisibility="WhileEditing"
                         IsPassword="True"
                         Placeholder="********"
-                        ToolTipProperties.Text="Required. Minimum of 8 characters."
-                        WidthRequest="300">
+                        ToolTipProperties.Text="Required. Minimum of 8 characters.">
                         <Entry.Behaviors>
                             <toolkit:CharactersValidationBehavior
                                 x:Name="validateBehaviorPassword"
                                 CharacterType="Alphanumeric"
                                 DecorationFlags="NullToEmpty"
-                                Flags="ValidateOnValueChanged,ValidateOnUnfocusing"
+                                Flags="ValidateOnValueChanged"
                                 MinimumCharacterTypeCount="8" />
                         </Entry.Behaviors>
                     </Entry>
@@ -221,9 +295,29 @@
                             Value="False">
                             <Setter Property="Stroke" Value="Red" />
                         </DataTrigger>
+
+
                     </Border.Triggers>
                 </Border>
 
+                <Image>
+                    <Image.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorPassword}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="True">
+                            <Setter Property="Source" Value="check.png" />
+
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorPassword}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="false">
+                            <Setter Property="Source" Value="x_mark.png" />
+
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
             </HorizontalStackLayout>
 
 
@@ -231,25 +325,22 @@
 
                 <Label Style="{StaticResource labelStyle}" Text="Confirm Password" />
 
-                <Border Stroke="black">
+                <Border x:Name="borderConfirmPassword"
+                        Stroke="black">
                     <Entry
                         x:Name="txtConfirmPassword"
                         toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference txtMobileNumber}"
                         ClearButtonVisibility="WhileEditing"
                         IsPassword="True"
-                        Placeholder="********"
-                        Unfocused="txtConfirmPassword_Unfocused"
-                        WidthRequest="300">
+                        Placeholder="********">
                         <Entry.Behaviors>
-                            <toolkit:RequiredStringValidationBehavior
-                                x:Name="validateBehaviorConfirmPassword"
-                                Flags="ValidateOnValueChanged,ValidateOnUnfocusing"
-                                RequiredString="{Binding Source={x:Reference txtPassword}, Path=Text}" />
+                            <toolkit:RequiredStringValidationBehavior x:Name="validateBehaviorMatchPassword" RequiredString="{Binding Source={x:Reference txtPassword}, Path=Text}" 
+                                                                      Flags="ValidateOnValueChanged"/>
                         </Entry.Behaviors>
                     </Entry>
                     <Border.Triggers>
                         <DataTrigger
-                            Binding="{Binding Source={x:Reference validateBehaviorConfirmPassword}, Path=IsValid}"
+                            Binding="{Binding Source={x:Reference validateBehaviorMatchPassword}, Path=IsValid}"
                             TargetType="Border"
                             Value="False">
                             <Setter Property="Stroke" Value="Red" />
@@ -258,15 +349,60 @@
 
                 </Border>
 
+                <Image x:Name="imgConfirmPassword">
+                    <Image.Triggers>
+                        
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorMatchPassword}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="false">
+                            <Setter Property="Source" Value="x_mark.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorMatchPassword}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="True">
+                            <Setter Property="Source" Value="check.png" />
+                        </DataTrigger>
+
+                    </Image.Triggers>
+                    
+                </Image>
             </HorizontalStackLayout>
-            <Label
-                x:Name="lblPasswordNotMatch"
-                HorizontalOptions="EndAndExpand"
-                IsVisible="False"
-                Style="{StaticResource labelStyle}"
-                Text="Password does not match"
-                TextColor="Red"
-                WidthRequest="200" />
+
+            <HorizontalStackLayout
+                HorizontalOptions="End"
+                Spacing="5"
+                WidthRequest="320">
+                <Image>
+                    <Image.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference lblPasswordNotMatch}, Path=IsVisible}"
+                            TargetType="Image"
+                            Value="True">
+                            <Setter Property="Source" Value="alert_triangle.png" />
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
+                <Label
+                    x:Name="lblPasswordNotMatch"
+                    HorizontalOptions="EndAndExpand"
+                    Style="{StaticResource labelStyle}"
+                    Text="Password does not match"
+                    TextColor="Red"
+                    WidthRequest="200">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label"
+                                     Binding="{Binding Source={x:Reference validateBehaviorMatchPassword}, Path=IsValid}"
+                                     Value="True">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                        
+
+                    </Label.Triggers>
+                </Label>
+                
+            </HorizontalStackLayout>
         </VerticalStackLayout>
 
 
@@ -285,9 +421,23 @@
 
             <HorizontalStackLayout Spacing="10">
                 <Label Style="{StaticResource labelStyle}" Text="Birth Date" />
-                <Border x:Name="borderDatePicker" Stroke="black">
-                    <DatePicker x:Name="dateBirthDate" WidthRequest="300" />
+                <Border x:Name="borderDatePicker"
+                        Stroke="black">
+                    <DatePicker
+                        x:Name="dateBirthDate"
+                        DateSelected="OnDateSelected"
+                        MaximumDate="{Binding MaxDate}"
+                        MinimumDate="{Binding MininumDate}" />
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border"
+                                     Binding="{Binding Source={x:Reference dateBirthDate}, Path=Date}"
+                                     Value="{x:Static sys:DateTime.Today}">
+                            <Setter Property="Stroke" Value="Red" />
+                        </DataTrigger>
+                    </Border.Triggers>
                 </Border>
+                 
+                <Image x:Name="imgDatePicker" />
             </HorizontalStackLayout>
 
 
@@ -297,15 +447,13 @@
                     <Entry
                         x:Name="txtMobileNumber"
                         toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference txtCity}"
-                        ToolTipProperties.Text="Number input only"
-                        WidthRequest="300">
+                        ToolTipProperties.Text="Number input only">
                         <Entry.Behaviors>
                             <toolkit:CharactersValidationBehavior
                                 x:Name="validateBehaviorMobileNumber"
                                 CharacterType="Digit"
                                 DecorationFlags="NullToEmpty"
-                                Flags="ValidateOnUnfocusing"
-                                InvalidStyle="{StaticResource invalidEntryStyle}"
+                                Flags="ValidateOnValueChanged"
                                 MinimumCharacterTypeCount="11"
                                 ValidStyle="{StaticResource validEntryStyle}" />
                         </Entry.Behaviors>
@@ -319,6 +467,24 @@
                         </DataTrigger>
                     </Border.Triggers>
                 </Border>
+
+                <Image>
+                    <Image.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorMobileNumber}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="True">
+                            <Setter Property="Source" Value="check.png" />
+
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference validateBehaviorMobileNumber}, Path=IsValid}"
+                            TargetType="Image"
+                            Value="false">
+                            <Setter Property="Source" Value="x_mark.png" />
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout Spacing="10">
@@ -327,8 +493,7 @@
                     <Entry
                         x:Name="txtCity"
                         toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference pickerSchoolProgram}"
-                        Placeholder="Optional*"
-                        WidthRequest="300" />
+                        Placeholder="Optional*" />
                 </Border>
             </HorizontalStackLayout>
 
@@ -340,10 +505,9 @@
                     <Picker
                         x:Name="pickerSchoolProgram"
                         ItemsSource="{Binding SchoolProgram}"
-                        SelectedIndexChanged="pickerSchoolProgram_SelectedIndexChanged"
-                        Unfocused="pickerSchoolProgram_Unfocused"
-                        WidthRequest="300" />
+                        SelectedIndexChanged="pickerSchoolProgram_SelectedIndexChanged" />
                 </Border>
+                <Image x:Name="imgPickerSchoolProgram" />
 
             </HorizontalStackLayout>
 
@@ -355,10 +519,10 @@
                     <Picker
                         x:Name="pickerCourse"
                         ItemsSource="{Binding Courses}"
-                        SelectedIndexChanged="pickerCourse_SelectedIndexChanged"
-                        Unfocused="pickerCourse_Unfocused"
-                        WidthRequest="300" />
+                        SelectedIndexChanged="pickerCourse_SelectedIndexChanged" />
                 </Border>
+
+                <Image x:Name="imgPickerCourse" />
             </HorizontalStackLayout>
 
 
@@ -370,10 +534,10 @@
                     <Picker
                         x:Name="pickerYearLevel"
                         ItemsSource="{Binding YearLevel}"
-                        SelectedIndexChanged="pickerYearLevel_SelectedIndexChanged"
-                        Unfocused="pickerYearLevel_Unfocused"
-                        WidthRequest="300" />
+                        SelectedIndexChanged="pickerYearLevel_SelectedIndexChanged" />
                 </Border>
+
+                <Image x:Name="imgPickerYearLevel" />
 
             </HorizontalStackLayout>
         </VerticalStackLayout>
@@ -382,6 +546,7 @@
         <HorizontalStackLayout
             Grid.Row="1"
             Grid.ColumnSpan="2"
+            Margin="20"
             HorizontalOptions="Center"
             Spacing="15"
             VerticalOptions="Center">
@@ -401,6 +566,5 @@
                 Text="Reset" />
 
         </HorizontalStackLayout>
-
     </Grid>
 </ContentPage>

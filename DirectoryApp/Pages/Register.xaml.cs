@@ -4,7 +4,6 @@ using CommunityToolkit.Maui.Views;
 using DirectoryApp.ViewModel;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using static System.String;
 
 //things to do
 //figure out how to target all pickers selectedIndexChanged event
@@ -13,14 +12,12 @@ public partial class Register : ContentPage, INotifyPropertyChanged
 {
     //implement the INotifyPropertyChanged interface
 
-
+    public DateTime MaxDate { get; set; } = DateTime.Today;
+    public DateTime MinimumDate { get; set; } = DateTime.Today.AddYears(-200);
 
     private ObservableCollection<String> _schoolProgram;
     private ObservableCollection<String> _courses;
     private ObservableCollection<String> _yearLevel;
-    private bool pickerSchoolProgramHasSelected = false;
-    private bool pickerCourseHasSelected = false;
-    private bool pickerYearLvlHasSelected = false;
 
     public ObservableCollection<String> SchoolProgram
     {
@@ -112,10 +109,11 @@ public partial class Register : ContentPage, INotifyPropertyChanged
         if (selectedDate == DateTime.Today)
         {
             borderDatePicker.Stroke = Colors.Red;
+            imgDatePicker.Source = "x_mark.png";
         }
         else
         {
-            borderDatePicker.Stroke = Colors.Black;
+            imgDatePicker.Source = "check.png";
         }
     }
 
@@ -168,22 +166,25 @@ public partial class Register : ContentPage, INotifyPropertyChanged
         //check if phone number is valid
         //check if username is unique
 
-        bool areAllFieldsFilled = !IsNullOrWhiteSpace(txtStudentID.Text) &&
-                                  !IsNullOrWhiteSpace(txtFirstName.Text) &&
-                                  !IsNullOrWhiteSpace(txtLastName.Text) &&
-                                  !IsNullOrWhiteSpace(txtEmail.Text) &&
-                                  !IsNullOrWhiteSpace(txtPassword.Text) &&
-                                  !IsNullOrWhiteSpace(txtConfirmPassword.Text) &&
-                                  (rdoFemale.IsChecked || rdoMale.IsChecked) &&
-                                  !IsNullOrWhiteSpace(txtMobileNumber.Text) &&
-                                  !IsNullOrWhiteSpace(txtCity.Text) &&
-                                  !IsNullOrWhiteSpace(pickerSchoolProgram.SelectedItem.ToString()) &&
-                                  !IsNullOrWhiteSpace(pickerCourse.SelectedItem.ToString()) &&
-                                  !IsNullOrWhiteSpace(pickerYearLevel.SelectedItem.ToString());
+        //used the validateBehaviors
+
+        bool areAllFieldsValid =
+                validateBehaviorStudentID.IsValid &&
+                validateBehaviorFirstName.IsValid &&
+                validateBehaviorLastName.IsValid &&
+                validateBehaviorEmail.IsValid &&
+                validateBehaviorPassword.IsValid &&
+                validateBehaviorMatchPassword.IsValid &&
+                validateBehaviorMobileNumber.IsValid &&
+                (pickerSchoolProgram.SelectedIndex != 0) &&
+                (pickerCourse.SelectedIndex != 0) &&
+                (pickerYearLevel.SelectedIndex != 0) &&
+                (rdoFemale.IsChecked || rdoMale.IsChecked) &&
+                dateBirthDate.Date != DateTime.Today;
 
         bool arePasswordsMatching = txtPassword.Text == txtConfirmPassword.Text;
 
-        return areAllFieldsFilled && arePasswordsMatching;
+        return areAllFieldsValid && arePasswordsMatching;
 
     }
 
@@ -236,6 +237,19 @@ public partial class Register : ContentPage, INotifyPropertyChanged
         pickerSchoolProgram.SelectedIndex = 0; // 0 corresponds to "-SELECT-"
         pickerCourse.SelectedIndex = 0;
         pickerYearLevel.SelectedIndex = 0;
+
+        imgDatePicker.Source = "x_mark.png";
+        imgConfirmPassword.Source = "x_mark.png";
+
+        txtStudentID.Text = string.Empty;
+        txtFirstName.Text = string.Empty;
+        txtLastName.Text = string.Empty;
+        txtEmail.Text = string.Empty;
+        txtPassword.Text = string.Empty;
+        txtConfirmPassword.Text = string.Empty;
+        txtMobileNumber.Text = string.Empty;
+        txtCity.Text = string.Empty;
+
     }
 
     private void pickerSchoolProgram_SelectedIndexChanged(object sender, EventArgs e)
@@ -247,11 +261,13 @@ public partial class Register : ContentPage, INotifyPropertyChanged
 
         if (selectedIndex == 0)
         {
-            pickerSchoolProgramHasSelected = false;
+            borderSchoolProgram.Stroke = Colors.Red;
+            imgPickerSchoolProgram.Source = "x_mark.png";
         }
         else
         {
-            pickerSchoolProgramHasSelected = true;
+            borderSchoolProgram.Stroke = Colors.Black;
+            imgPickerSchoolProgram.Source = "check.png";
         }
         //clear the courses picker
         Courses.Clear();
@@ -337,23 +353,12 @@ public partial class Register : ContentPage, INotifyPropertyChanged
 
     }
 
-    private void txtConfirmPassword_Unfocused(object sender, FocusEventArgs e)
+    private void txtConfirmPassword_TextChanged(object sender, FocusEventArgs e)
     {
         lblPasswordNotMatch.IsVisible = txtPassword.Text != txtConfirmPassword.Text;
+
     }
 
-
-    private void pickerYearLevel_Unfocused(object sender, FocusEventArgs e)
-    {
-        if (!pickerYearLvlHasSelected)
-        {
-            borderYearLevel.Stroke = Colors.Red;
-        }
-        else
-        {
-            borderYearLevel.Stroke = Colors.Black;
-        }
-    }
 
     private void pickerYearLevel_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -362,41 +367,37 @@ public partial class Register : ContentPage, INotifyPropertyChanged
 
         if (selectedIndex == 0)
         {
-            pickerYearLvlHasSelected = false;
+            borderYearLevel.Stroke = Colors.Red;
+            imgPickerYearLevel.Source = "x_mark.png";
         }
         else
         {
-            pickerYearLvlHasSelected = true;
+            borderYearLevel.Stroke = Colors.Black;
+            imgPickerYearLevel.Source = "check.png";
         }
     }
 
-    private void pickerCourse_Unfocused(object sender, FocusEventArgs e)
-    {
-        if (!pickerCourseHasSelected)
-        {
-            borderCourse.Stroke = Colors.Red;
-        }
-        else
-        {
-            borderCourse.Stroke = Colors.Black;
-        }
-    }
+
 
     private void pickerCourse_SelectedIndexChanged(object sender, EventArgs e)
     {
         var picker = (Picker)sender;
         int selectedIndex = picker.SelectedIndex;
 
-        if (selectedIndex == 0)
+        if (selectedIndex == 0 || selectedIndex == -1)
         {
-            pickerCourseHasSelected = false;
+            borderCourse.Stroke = Colors.Red;
+            imgPickerCourse.Source = "x_mark.png";
         }
         else
         {
-            pickerCourseHasSelected = true;
+            borderCourse.Stroke = Colors.Black;
+            imgPickerCourse.Source = "check.png";
         }
     }
 
-    private void pickerSchoolProgram_Unfocused(object sender, FocusEventArgs e) => borderSchoolProgram.Stroke = pickerSchoolProgramHasSelected ? Colors.Black : Colors.Red;
+    //args is the event arguments
+    //sender is the object that raised the event
+
 
 }
