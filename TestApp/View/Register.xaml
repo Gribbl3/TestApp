@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TestApp.View.Register"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TestApp.ViewModel"
+    Title="Register"
+    x:DataType="local:StudentViewModel">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="WidthRequest" Value="100" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="WidthRequest" Value="200" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="Placeholder" Value="" />
+        </Style>
+
+        <Style TargetType="VerticalStackLayout">
+            <Setter Property="Spacing" Value="10" />
+        </Style>
+
+        <Style TargetType="Picker">
+            <Setter Property="WidthRequest" Value="200" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid
+        ColumnDefinitions="*,*"
+        ColumnSpacing="20"
+        HorizontalOptions="Center"
+        RowDefinitions="80*,20*"
+        RowSpacing="10"
+        VerticalOptions="Center">
+        <!--  1st Column  -->
+        <VerticalStackLayout Background="firebrick">
+            <HorizontalStackLayout>
+                <Label Text="Student ID" />
+                <Entry Text="{Binding Student.Id}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="First Name" />
+                <Entry Text="{Binding Student.FirstName}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Last Name" />
+                <Entry Text="{Binding Student.LastName}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Email" />
+                <Entry Text="{Binding Student.Email}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Password" />
+                <Entry IsPassword="True" Text="{Binding Student.Password}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Confirm Password" />
+                <Entry IsPassword="True" Text="{Binding Student.ConfirmPassword}" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <!--  2nd Column  -->
+        <VerticalStackLayout Grid.Column="1">
+            <HorizontalStackLayout>
+                <Label Text="Gender" />
+                <RadioButton Content="Male" IsChecked="{Binding Student.IsMaleCheck}" />
+                <RadioButton Content="Female" IsChecked="{Binding Student.IsFemaleCheck}"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Birth Date" />
+                <Border>
+                    <Entry Text="{Binding Student.BirthDate}" />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Mobile Number" />
+                <Entry Text="{Binding Student.MobileNumber}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="City" />
+                <Border>
+                    <Entry Text="{Binding Student.City}" />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="School Program" />
+                <Border>
+                    <Picker ItemsSource="{Binding Student.SchoolProgramItemSource}" SelectedItem="{Binding Student.SchoolProgram}"/>
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Course" />
+                <Border>
+                    <Picker ItemsSource="{Binding Student.CourseItemSource}" SelectedItem="{Binding Student.Course}"/>
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Year Level" />
+                <Border>
+                    <Picker ItemsSource="{Binding Student.YearLevelItemSource}" SelectedItem="{Binding Student.YearLevel}"/>
+                </Border>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <HorizontalStackLayout
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Center"
+            Spacing="15">
+            <Button Command="{Binding Submit}" Text="Submit" />
+            <Button Command="{Binding Reset}" Text="Reset" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

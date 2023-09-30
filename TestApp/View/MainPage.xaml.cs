@@ -1,4 +1,4 @@
-﻿namespace TestApp
+﻿namespace TestApp.View
 {
     public partial class MainPage : ContentPage
     {
@@ -35,8 +35,8 @@
                 errMessage.Text = "Username and/or Password should not be empty. Please try again";
                 errMessage.TextColor = Colors.Red;
             }
-            else if(!isAuthenticated)
-            {   
+            else if (!isAuthenticated)
+            {
                 errMessage.Text = "Username and/or Password is incorrect. Please try again.";
                 errMessage.TextColor = Colors.Red;
             }
@@ -45,7 +45,7 @@
                 errMessage.Text = "Login Successful";
                 errMessage.TextColor = Colors.Green;
             }
-            
+
             errMessage.IsVisible = true;
 
         }
