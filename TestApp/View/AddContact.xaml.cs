@@ -4,11 +4,10 @@ namespace TestApp.View;
 
 public partial class AddContact : ContentPage
 {
-    public AddContact()
+    public AddContact(AddContactViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = new AddContactViewModel();
-        //set window title
+        BindingContext = viewModel;
         Shell.Current.Title = "Add Contact";
     }
 }

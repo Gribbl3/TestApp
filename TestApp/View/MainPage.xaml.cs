@@ -1,25 +1,17 @@
-﻿namespace TestApp.View
+﻿using System.Windows.Input;
+
+namespace TestApp.View
 {
     public partial class MainPage : ContentPage
     {
-
+        public ICommand OnTappedCommand => new Command(OnRegisterTappedCommand);
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = this;
             Shell.Current.Title = "Window Title";
         }
 
-        private void OnEntryTextChanged(object sender, TextChangedEventArgs e)
-        {
-            string oldText = e.OldTextValue;
-            string newText = e.NewTextValue;
-            string myText = usernameEntry.Text;
-        }
-
-        private void OnEntryCompleted(object sender, EventArgs e)
-        {
-            string text = ((Entry)sender).Text;
-        }
 
         private void OnButtonClicked(object sender, EventArgs e)
         {
@@ -50,11 +42,10 @@
 
         }
 
-        //private async void OnLabelTextTapped(object sender, EventArgs e)
-        //{
-        //    //await Navigation.PushAsync(new Register());
-        //    await Shell.Current.DisplayAlert();
-        //}
+        private async void OnRegisterTappedCommand()
+        {
+            await Shell.Current.GoToAsync(nameof(Register));
+        }
 
         private bool AuthenticateUser(string username, string password)
         {

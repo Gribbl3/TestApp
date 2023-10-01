@@ -4,9 +4,10 @@ namespace TestApp.View;
 
 public partial class Home : ContentPage
 {
-    public Home()
+    public Home(HomeViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = new HomeViewModel();
+        BindingContext = viewModel;
+        Shell.Current.Title = "Home";
     }
 }
