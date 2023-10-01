@@ -27,12 +27,12 @@
         //pickers validation
         public static bool IsDefaultValue(string value, string defaultValue, string fieldName)
         {
-            if (value == defaultValue)
+            if (value == defaultValue || value == null)
             {
                 Shell.Current.DisplayAlert("Error", $"{fieldName} is required", "Ok");
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
     }
 }
