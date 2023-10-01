@@ -4,9 +4,9 @@ namespace TestApp.View;
 
 public partial class Register : ContentPage
 {
-    public Register()
+    public Register(RegisterViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = new RegisterViewModel();
+        BindingContext = viewModel;
     }
 }

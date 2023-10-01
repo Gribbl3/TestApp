@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TestApp.View.Home"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:TestApp.ViewModel"
+    xmlns:model="clr-namespace:TestApp.Model"
+    Title="Home"
+    x:DataType="vm:HomeViewModel">
+    <CollectionView ItemsSource="{Binding ContactList}">
+        <CollectionView.Header>
+            <Frame>
+                <Grid ColumnDefinitions="*,*,*,*,*,*,*,*">
+                    <Label Grid.Column="0" Text="ID" />
+                    <Label Grid.Column="1" Text="Last Name" />
+                    <Label Grid.Column="2" Text="First Name" />
+                    <Label Grid.Column="3" Text="School" />
+                    <Label Grid.Column="4" Text="Course" />
+                    <Label Grid.Column="5" Text="Email" />
+                    <Label Grid.Column="6" Text="Contact" />
+                    <Label Grid.Column="7" Text="Type" />
+                </Grid>
+            </Frame>
+        </CollectionView.Header>
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:Contact">
+                <Frame>
+                    <Grid ColumnDefinitions="*,*,*,*,*,*,*,*">
+                        <Label Grid.Column="0" Text="{Binding Id}" />
+                        <Label Grid.Column="1" Text="{Binding LastName}" />
+                        <Label Grid.Column="2" Text="{Binding FirstName}" />
+                        <Label Grid.Column="3" Text="{Binding SchoolProgram}" />
+                        <Label Grid.Column="4" Text="{Binding Course}" />
+                        <Label Grid.Column="5" Text="{Binding Email}" />
+                        <Label Grid.Column="6" Text="{Binding MobileNumber}" />
+                        <Label Grid.Column="7" Text="{Binding Type}" />
+                    </Grid>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

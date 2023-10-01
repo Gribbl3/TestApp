@@ -1,40 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TestApp.View.MainPage">
+<ContentPage
+    x:Class="TestApp.View.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <ScrollView>
-        
+
         <VerticalStackLayout
-            Spacing="12"
             Padding="400,10"
+            Spacing="12"
             VerticalOptions="Center">
 
             <Label Text="Username" />
-            <Entry x:Name ="usernameEntry"
-                   VerticalOptions="Center"
-                   MaxLength="20"
-                   Placeholder="Username" 
-                   TextChanged="OnEntryTextChanged"
-                   Completed="OnEntryCompleted"/>
-            
+            <Entry
+                x:Name="usernameEntry"
+                Completed="OnEntryCompleted"
+                MaxLength="20"
+                Placeholder="Username"
+                TextChanged="OnEntryTextChanged"
+                VerticalOptions="Center" />
+
             <Label Text="Password" />
-            <Entry x:Name ="passwordEntry" 
-                   MaxLength="20"
-                   Placeholder="*******" 
-                   IsPassword="True"
-                   TextChanged="OnEntryTextChanged"
-                   Completed="OnEntryCompleted"/>
+            <Entry
+                x:Name="passwordEntry"
+                Completed="OnEntryCompleted"
+                IsPassword="True"
+                MaxLength="20"
+                Placeholder="*******"
+                TextChanged="OnEntryTextChanged" />
+
+            <Button
+                BackgroundColor="SkyBlue"
+                Clicked="OnButtonClicked"
+                FontAttributes="Bold"
+                Text="Login"
+                TextColor="White" />
             
-            <Button Text="Login"
-                    FontAttributes="Bold"
-                    BackgroundColor="SkyBlue"
-                    TextColor="White"
-                    Clicked="OnButtonClicked"/>
+            <!--<Label
+                x:Name="lblNewUser"
+                HorizontalOptions="Center"
+                Text="New User? Register Here"
+                TextColor="#3b3bff"
+                TextDecorations="Underline">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnLabelTextTapped" />
+                </Label.GestureRecognizers>
+            </Label>-->
             
-            <Label x:Name = "errMessage"
-                   IsVisible="false"
-                   />
+            <Label x:Name="errMessage" IsVisible="false" />
         </VerticalStackLayout>
     </ScrollView>
 

@@ -50,6 +50,12 @@
 
         }
 
+        //private async void OnLabelTextTapped(object sender, EventArgs e)
+        //{
+        //    //await Navigation.PushAsync(new Register());
+        //    await Shell.Current.DisplayAlert();
+        //}
+
         private bool AuthenticateUser(string username, string password)
         {
             return username == "admin" && password == "admin";
