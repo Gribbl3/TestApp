@@ -1,37 +1,40 @@
-﻿using System.Text.Json;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json;
+using TestApp.Model;
 
 namespace TestApp.Service
 {
     public class ContactService : IContactService
     {
         private readonly string mainDir = FileSystem.Current.AppDataDirectory;
-        public Task<bool> AddContact(Model.Contact contact)
+
+        public Task<bool> AddContact(Model.Contact contact, Student student)
         {
+            ObservableCollection<Model.Contact> contactCollection = GetContacts(student).Result;
             if (contact == null)
             {
                 return Task.FromResult(false);
             }
 
-            string contactsFilePath = Path.Combine(mainDir, $"s{contact.Id}.json");
-            if (!File.Exists(contactsFilePath))
-            {
-                var json = JsonSerializer.Serialize(contact);
-                File.WriteAllText(contactsFilePath, json);
-                return Task.FromResult(true);
-            }
-            return Task.FromResult(false);
+            string contactsFilePath = Path.Combine(mainDir, $"s{student.Id}.json");
+            contactCollection.Add(contact);
+
+            var json = JsonSerializer.Serialize(contactCollection);
+            File.WriteAllText(contactsFilePath, json);
+            return Task.FromResult(true);
+
         }
 
-        public Task<List<Model.Contact>> GetContacts(Model.Contact contact)
+        public Task<ObservableCollection<Model.Contact>> GetContacts(Student student)
         {
-            string contactsFilePath = Path.Combine(mainDir, $"s{contact.Id}.json");
+            string contactsFilePath = Path.Combine(mainDir, $"s{student.Id}.json");
             if (!File.Exists(contactsFilePath))
             {
-                return Task.FromResult(new List<Model.Contact>());
+                return Task.FromResult(new ObservableCollection<Model.Contact>());
             }
 
             string json = File.ReadAllText(contactsFilePath);
-            var contactList = JsonSerializer.Deserialize<List<Model.Contact>>(json);
+            var contactList = JsonSerializer.Deserialize<ObservableCollection<Model.Contact>>(json);
 
             return Task.FromResult(contactList);
         }

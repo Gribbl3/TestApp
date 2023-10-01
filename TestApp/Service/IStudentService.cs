@@ -1,10 +1,11 @@
-﻿using TestApp.Model;
+﻿using System.Collections.ObjectModel;
+using TestApp.Model;
 
 namespace TestApp.Service
 {
     public interface IStudentService
     {
-        Task<List<Student>> GetStudentList();
+        Task<ObservableCollection<Student>> GetStudentCollection();
         Task<bool> AddStudent(Student student);
     }
 }

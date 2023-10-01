@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using TestApp.Model;
 
 namespace TestApp.Service
@@ -9,32 +10,31 @@ namespace TestApp.Service
 
         public Task<bool> AddStudent(Student student)
         {
+            ObservableCollection<Student> studentCollection = GetStudentCollection().Result;
             if (student == null)
             {
                 return Task.FromResult(false);
             }
 
             string usersFilePath = Path.Combine(mainDir, "Users.json");
-            if (!File.Exists(usersFilePath))
-            {
-                var json = JsonSerializer.Serialize(student);
-                File.WriteAllText(usersFilePath, json);
-                return Task.FromResult(true);
-            }
-            return Task.FromResult(false);
+            studentCollection.Add(student);
+
+            var json = JsonSerializer.Serialize<ObservableCollection<Student>>(studentCollection);
+            File.WriteAllText(usersFilePath, json);
+            return Task.FromResult(true);
+
         }
 
-        public Task<List<Student>> GetStudentList()
+        public Task<ObservableCollection<Student>> GetStudentCollection()
         {
-            string filePath = Path.Combine(mainDir, "student.json");
-
+            string filePath = Path.Combine(mainDir, "Users.json");
             if (!File.Exists(filePath))
             {
-                return Task.FromResult(new List<Student>());
+                return Task.FromResult(new ObservableCollection<Student>());
             }
 
             string json = File.ReadAllText(filePath);
-            var studentList = JsonSerializer.Deserialize<List<Student>>(json);
+            var studentList = JsonSerializer.Deserialize<ObservableCollection<Student>>(json);
 
             return Task.FromResult(studentList);
         }
