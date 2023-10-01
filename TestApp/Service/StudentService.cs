@@ -14,12 +14,11 @@ namespace TestApp.Service
                 return Task.FromResult(false);
             }
 
-            string fileName = Path.Combine(mainDir, "student.json");
-            if (File.Exists(fileName))
+            string usersFilePath = Path.Combine(mainDir, "Users.json");
+            if (!File.Exists(usersFilePath))
             {
                 var json = JsonSerializer.Serialize(student);
-                File.WriteAllText(fileName, json);
-
+                File.WriteAllText(usersFilePath, json);
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
@@ -27,7 +26,17 @@ namespace TestApp.Service
 
         public Task<List<Student>> GetStudentList()
         {
-            throw new NotImplementedException();
+            string filePath = Path.Combine(mainDir, "student.json");
+
+            if (!File.Exists(filePath))
+            {
+                return Task.FromResult(new List<Student>());
+            }
+
+            string json = File.ReadAllText(filePath);
+            var studentList = JsonSerializer.Deserialize<List<Student>>(json);
+
+            return Task.FromResult(studentList);
         }
     }
 }
