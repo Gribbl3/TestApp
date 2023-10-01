@@ -1,13 +1,20 @@
 ﻿using System.Windows.Input;
 using TestApp.Model;
+using TestApp.Service;
 
 namespace TestApp.ViewModel
 {
     public class RegisterViewModel
     {
+        private readonly IStudentService _studentService;
         public Student Student { get; set; } = new Student();
         public ICommand SubmitCommand => new Command(ValidateForm);
         public ICommand ResetCommand => new Command(ResetForm);
+
+        public RegisterViewModel(IStudentService studentService)
+        {
+            _studentService = studentService;
+        }
 
         private void ValidateForm()
         {
@@ -83,7 +90,7 @@ namespace TestApp.ViewModel
 
         private void Register()
         {
-
+            _studentService.AddStudent(Student);
         }
         private void ResetForm()
         {

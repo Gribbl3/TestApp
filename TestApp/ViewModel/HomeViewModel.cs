@@ -2,7 +2,7 @@
 
 namespace TestApp.ViewModel
 {
-    public class ContactViewModel
+    public class HomeViewModel
     {
         private ObservableCollection<Model.Contact> _contactList = new ObservableCollection<Model.Contact>();
 
@@ -10,6 +10,12 @@ namespace TestApp.ViewModel
         {
             get { return _contactList; }
             set { _contactList = value; }
+        }
+
+        public HomeViewModel()
+        {
+            ContactList.Add(new Model.Contact { FirstName = "John Doe", MobileNumber = "09123456789" });
+
         }
     }
 }
