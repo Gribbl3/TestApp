@@ -1,11 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace TestApp.ViewModel
 {
     public class HomeViewModel
     {
         private ObservableCollection<Model.Contact> _contactList = new ObservableCollection<Model.Contact>();
-
+        public ICommand AddContactCommand => new Command(AddContact);
         public ObservableCollection<Model.Contact> ContactList
         {
             get { return _contactList; }
@@ -14,7 +15,13 @@ namespace TestApp.ViewModel
 
         public HomeViewModel()
         {
-            ContactList.Add(new Model.Contact { FirstName = "John Doe", MobileNumber = "09123456789" });
+            ContactList.Add(new Model.Contact { LastName = "Lozada", FirstName = "John Doe", MobileNumber = "09123456789", Course = "BS Otin", SchoolProgram = "olok", Email = "allendakogotin@gmail.com", Id = "12321", Type = "Faculty" });
+            ContactList.Add(new Model.Contact { LastName = "Allen", FirstName = "John Doe", MobileNumber = "09123456789", Course = "BS Otin", SchoolProgram = "olok", Email = "allendakogotin@gmail.com", Id = "12321", Type = "Faculty" });
+            ContactList.Add(new Model.Contact { LastName = "Lozada", FirstName = "John Doe", MobileNumber = "09123456789", Course = "BS Otin", SchoolProgram = "olok", Email = "allendakogotin@gmail.com", Id = "12321", Type = "Faculty" });
+        }
+
+        private void AddContact()
+        {
 
         }
     }
