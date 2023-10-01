@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using TestApp.Service;
+using TestApp.View;
+using TestApp.ViewModel;
 
 namespace TestApp
 {
@@ -14,9 +17,16 @@ namespace TestApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+            //services
+            builder.Services.AddSingleton<IStudentService, StudentService>();
 
+            //viewmodels
+            builder.Services.AddTransient<RegisterViewModel>();
+
+            //views
+            builder.Services.AddTransient<Register>();
 #if DEBUG
-		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
