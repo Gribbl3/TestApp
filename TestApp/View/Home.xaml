@@ -19,18 +19,16 @@
         <CollectionView ItemsSource="{Binding ContactList}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Contact">
-                    <Frame>
-                        <Grid ColumnDefinitions="*,*,*,*,*,*,*,*">
-                            <Label Grid.Column="0" Text="{Binding Id}" />
-                            <Label Grid.Column="1" Text="{Binding LastName}" />
-                            <Label Grid.Column="2" Text="{Binding FirstName}" />
-                            <Label Grid.Column="3" Text="{Binding SchoolProgram}" />
-                            <Label Grid.Column="4" Text="{Binding Course}" />
-                            <Label Grid.Column="5" Text="{Binding Email}" />
-                            <Label Grid.Column="6" Text="{Binding MobileNumber}" />
-                            <Label Grid.Column="7" Text="{Binding Type}" />
-                        </Grid>
-                    </Frame>
+                    <Grid ColumnDefinitions="*,*,*,*,*,*,*,*">
+                        <Label Grid.Column="0" Text="{Binding Id}" />
+                        <Label Grid.Column="1" Text="{Binding LastName}" />
+                        <Label Grid.Column="2" Text="{Binding FirstName}" />
+                        <Label Grid.Column="3" Text="{Binding SchoolProgram}" />
+                        <Label Grid.Column="4" Text="{Binding Course}" />
+                        <Label Grid.Column="5" Text="{Binding Email}" />
+                        <Label Grid.Column="6" Text="{Binding MobileNumber}" />
+                        <Label Grid.Column="7" Text="{Binding Type}" />
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

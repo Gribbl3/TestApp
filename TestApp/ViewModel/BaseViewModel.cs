@@ -1,7 +1,11 @@
-﻿namespace TestApp.ViewModel
+﻿using System.ComponentModel;
+
+namespace TestApp.ViewModel
 {
-    public class BaseViewModel
+    public class BaseViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         //entries validation
         public static bool IsFieldEmpty(string value, string fieldName)
         {
@@ -33,6 +37,11 @@
                 return false;
             }
             return true;
+        }
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

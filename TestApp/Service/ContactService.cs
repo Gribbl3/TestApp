@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text.Json;
-using TestApp.Model;
+using Contact = TestApp.Model.Contact;
 
 namespace TestApp.Service
 {
@@ -8,15 +8,15 @@ namespace TestApp.Service
     {
         private readonly string mainDir = FileSystem.Current.AppDataDirectory;
 
-        public Task<bool> AddContact(Model.Contact contact, Student student)
+        public Task<bool> AddContact(Contact contact, string studentId)
         {
-            ObservableCollection<Model.Contact> contactCollection = GetContacts(student).Result;
+            ObservableCollection<Contact> contactCollection = GetContacts(studentId).Result;
             if (contact == null)
             {
                 return Task.FromResult(false);
             }
 
-            string contactsFilePath = Path.Combine(mainDir, $"s{student.Id}.json");
+            string contactsFilePath = Path.Combine(mainDir, $"s{studentId}.json");
             contactCollection.Add(contact);
 
             var json = JsonSerializer.Serialize(contactCollection);
@@ -25,16 +25,16 @@ namespace TestApp.Service
 
         }
 
-        public Task<ObservableCollection<Model.Contact>> GetContacts(Student student)
+        public Task<ObservableCollection<Contact>> GetContacts(string studentId)
         {
-            string contactsFilePath = Path.Combine(mainDir, $"s{student.Id}.json");
+            string contactsFilePath = Path.Combine(mainDir, $"s{studentId}.json");
             if (!File.Exists(contactsFilePath))
             {
-                return Task.FromResult(new ObservableCollection<Model.Contact>());
+                return Task.FromResult(new ObservableCollection<Contact>());
             }
 
             string json = File.ReadAllText(contactsFilePath);
-            var contactList = JsonSerializer.Deserialize<ObservableCollection<Model.Contact>>(json);
+            var contactList = JsonSerializer.Deserialize<ObservableCollection<Contact>>(json);
 
             return Task.FromResult(contactList);
         }

@@ -3,7 +3,12 @@
     x:Class="TestApp.View.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-
+    <ContentPage.Resources>
+        <Style TargetType="Border">
+            <Setter Property="Stroke" Value="black"/>
+        </Style>
+    </ContentPage.Resources>
+    
     <ScrollView>
 
         <VerticalStackLayout
@@ -12,41 +17,41 @@
             VerticalOptions="Center">
 
             <Label Text="Username" />
-            <Entry
-                x:Name="usernameEntry"
-                Completed="OnEntryCompleted"
-                MaxLength="20"
-                Placeholder="Username"
-                TextChanged="OnEntryTextChanged"
-                VerticalOptions="Center" />
+            <Border>
+                <Entry
+                    x:Name="usernameEntry"
+                    MaxLength="20"
+                    Placeholder="Student ID"
+                    VerticalOptions="Center" />
+            </Border>
 
             <Label Text="Password" />
-            <Entry
-                x:Name="passwordEntry"
-                Completed="OnEntryCompleted"
-                IsPassword="True"
-                MaxLength="20"
-                Placeholder="*******"
-                TextChanged="OnEntryTextChanged" />
+            <Border>
+                <Entry
+                    x:Name="passwordEntry"
+                    IsPassword="True"
+                    MaxLength="20"
+                    Placeholder="*******" />
+            </Border>
 
             <Button
-                BackgroundColor="SkyBlue"
+                BackgroundColor="#0090ff"
                 Clicked="OnButtonClicked"
                 FontAttributes="Bold"
                 Text="Login"
                 TextColor="White" />
-            
-            <!--<Label
+
+            <Label
                 x:Name="lblNewUser"
                 HorizontalOptions="Center"
                 Text="New User? Register Here"
                 TextColor="#3b3bff"
                 TextDecorations="Underline">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnLabelTextTapped" />
+                    <TapGestureRecognizer Command="{Binding OnTappedCommand}" />
                 </Label.GestureRecognizers>
-            </Label>-->
-            
+            </Label>
+
             <Label x:Name="errMessage" IsVisible="false" />
         </VerticalStackLayout>
     </ScrollView>

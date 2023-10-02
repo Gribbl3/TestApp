@@ -1,12 +1,25 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using TestApp.Model;
+using TestApp.Service;
 
 namespace TestApp.View
 {
     public partial class MainPage : ContentPage
     {
+        private string _studentId;
+        private ObservableCollection<Student> _studentCollection;
+        private readonly IStudentService _studentService;
         public ICommand OnTappedCommand => new Command(OnRegisterTappedCommand);
-        public MainPage()
+
+        public ObservableCollection<Student> StudentCollection
         {
+            get { return _studentCollection; }
+            set { _studentCollection = value; }
+        }
+        public MainPage(IStudentService studentService)
+        {
+            _studentService = studentService;
             InitializeComponent();
             BindingContext = this;
             Shell.Current.Title = "Window Title";
@@ -20,8 +33,6 @@ namespace TestApp.View
 
             //check if field entered is incorrect 
             bool isAuthenticated = AuthenticateUser(enteredUsername, enteredPassword);
-
-            //check if both or one of the fields is empty
             if (String.IsNullOrEmpty(enteredUsername) || String.IsNullOrEmpty(enteredPassword))
             {
                 errMessage.Text = "Username and/or Password should not be empty. Please try again";
@@ -38,8 +49,10 @@ namespace TestApp.View
                 errMessage.TextColor = Colors.Green;
             }
 
-            errMessage.IsVisible = true;
+            //check if both or one of the fields is empty
 
+            errMessage.IsVisible = true;
+            Shell.Current.GoToAsync($"{nameof(Home)}?id={_studentId}");
         }
 
         private async void OnRegisterTappedCommand()
@@ -49,7 +62,21 @@ namespace TestApp.View
 
         private bool AuthenticateUser(string username, string password)
         {
-            return username == "admin" && password == "admin";
+            foreach (var student in StudentCollection)
+            {
+                if (student.Id == username && student.Password == password)
+                {
+                    _studentId = student.Id;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            StudentCollection = _studentService.GetStudentCollection().Result;
         }
     }
 }

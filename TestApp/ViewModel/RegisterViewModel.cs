@@ -1,7 +1,6 @@
 ﻿using System.Windows.Input;
 using TestApp.Model;
 using TestApp.Service;
-using TestApp.View;
 
 namespace TestApp.ViewModel
 {
@@ -89,11 +88,11 @@ namespace TestApp.ViewModel
             Register();
         }
 
-        private async void Register()
+        private void Register()
         {
-            await _studentService.AddStudent(Student);
-            await Shell.Current.DisplayAlert("Success", "Student successfully registered", "Ok");
-            await Shell.Current.GoToAsync(nameof(Home));
+            _studentService.AddStudent(Student);
+            Shell.Current.DisplayAlert("Success", "Student successfully registered", "Ok");
+            Shell.Current.GoToAsync($"Home?StudentId={Student.Id}");
         }
 
         private void ResetForm()

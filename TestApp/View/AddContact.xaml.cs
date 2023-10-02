@@ -10,4 +10,10 @@ public partial class AddContact : ContentPage
         BindingContext = viewModel;
         Shell.Current.Title = "Add Contact";
     }
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+
+    }
 }

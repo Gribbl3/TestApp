@@ -1,40 +1,51 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using TestApp.Model;
 using TestApp.Service;
+using Contact = TestApp.Model.Contact;
 
 namespace TestApp.ViewModel
 {
-    public class HomeViewModel
+    [QueryProperty(nameof(StudentId), "id")]
+    public class HomeViewModel : BaseViewModel
     {
         private readonly IContactService _contactsService;
-        private readonly Student _student;
-        private ObservableCollection<Model.Contact> _contactList = new ObservableCollection<Model.Contact>();
+        private ObservableCollection<Contact> _contactList;
+        private string _studentId;
+        public string StudentId
+        {
+            get { return _studentId; }
+            set { _studentId = value; OnPropertyChanged(nameof(StudentId)); }
+        }
         public ICommand AddContactCommand => new Command(AddContact);
-        public ObservableCollection<Model.Contact> ContactList
+        public ObservableCollection<Contact> ContactList
         {
             get { return _contactList; }
             set { _contactList = value; }
         }
 
-        public HomeViewModel(IContactService contactsService, Student student)
+        public HomeViewModel(IContactService contactsService)
         {
             _contactsService = contactsService;
-            _student = student;
+            ContactList = _contactsService.GetContacts(StudentId).Result;
+            //ContactList = new ObservableCollection<Contact>()
+            //{
+            //    new Contact()
+            //    {
+            //        Id = "1",
+            //        FirstName = "John",
+            //        LastName = "Doe",
+            //        Email = ""
+            //    }};
         }
 
         private async void AddContact()
         {
-            await Shell.Current.GoToAsync(nameof(View.AddContact));
+            await Shell.Current.GoToAsync($"{nameof(View.AddContact)}?id={StudentId}");
         }
 
-        public async void LoadContacts()
+        private void LoadContacts()
         {
-            var contacts = await _contactsService.GetContacts(_student);
-            foreach (var contact in contacts)
-            {
-                ContactList.Add(contact);
-            }
+            ContactList = _contactsService.GetContacts(StudentId).Result;
         }
 
     }

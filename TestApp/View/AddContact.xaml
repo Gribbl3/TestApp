@@ -50,7 +50,7 @@
                 <HorizontalStackLayout>
                     <Label Text="ID" />
                     <Border>
-                        <Entry Text="{Binding Contact.FirstName}" />
+                        <Entry Text="{Binding Contact.Id}" MaxLength="5"/>
                     </Border>
                 </HorizontalStackLayout>
 
@@ -64,14 +64,14 @@
                 <HorizontalStackLayout>
                     <Label Text="Last Name" />
                     <Border>
-                        <Entry Text="{Binding Contact.FirstName}" />
+                        <Entry Text="{Binding Contact.LastName}" />
                     </Border>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout>
                     <Label Text="Email" />
                     <Border>
-                        <Entry Text="{Binding Contact.FirstName}" />
+                        <Entry Text="{Binding Contact.Email}" />
                     </Border>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
@@ -104,8 +104,8 @@
                 Grid.ColumnSpan="2"
                 HorizontalOptions="Center"
                 Spacing="10">
-                <Button Background="#0090ff" Text="Submit" />
-                <Button Background="{StaticResource Gray300Brush}" Text="Reset" />
+                <Button Background="#0090ff" Text="Submit" Command="{Binding SubmitCommand}"/>
+                <Button Background="{StaticResource Gray300Brush}" Text="Reset" Command="{Binding ResetCommand}" />
             </HorizontalStackLayout>
 
         </Grid>

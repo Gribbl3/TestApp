@@ -1,11 +1,10 @@
 ﻿using System.Collections.ObjectModel;
-using TestApp.Model;
-
+using Contact = TestApp.Model.Contact;
 namespace TestApp.Service
 {
     public interface IContactService
     {
-        public Task<ObservableCollection<Model.Contact>> GetContacts(Student student);
-        public Task<bool> AddContact(Model.Contact contact, Student student);
+        public Task<ObservableCollection<Contact>> GetContacts(string studentId);
+        public Task<bool> AddContact(Contact contact, string studentId);
     }
 }
