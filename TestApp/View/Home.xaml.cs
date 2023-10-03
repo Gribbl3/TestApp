@@ -15,4 +15,9 @@ public partial class Home : ContentPage
     {
         base.OnAppearing();
     }
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+    }
 }

@@ -8,24 +8,17 @@
     Title="Home"
     x:DataType="vm:HomeViewModel">
     <StackLayout Margin="20" Spacing="10">
-        <!--<Button
+        <Button
             Background="#0090ff"
             Command="{Binding AddContactCommand}"
             CornerRadius="12"
             FontAttributes="Bold"
             FontSize="13"
             HorizontalOptions="End"
-            Text="+" />-->
+            Text="+" />
 
+        <Label Text="{Binding StudentId}"/>
 
-        <StackLayout>
-            <Label Text="{Binding ContactList[0].Id}"/>
-            <Label Text="{Binding ContactList[0].FirstName}"/>
-            <Label Text="{Binding ContactList[0].LastName}"/>
-            <Label Text="{Binding ContactList[0].Email}"/>
-            <Label Text="{Binding ContactList[0].MobileNumber}"/>
-        </StackLayout>
-        
         <CollectionView ItemsSource="{Binding ContactList}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Contact">

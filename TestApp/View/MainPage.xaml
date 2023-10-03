@@ -5,10 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <ContentPage.Resources>
         <Style TargetType="Border">
-            <Setter Property="Stroke" Value="black"/>
+            <Setter Property="Stroke" Value="black" />
         </Style>
     </ContentPage.Resources>
-    
+
     <ScrollView>
 
         <VerticalStackLayout

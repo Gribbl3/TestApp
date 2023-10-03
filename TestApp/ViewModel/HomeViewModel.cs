@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Windows.Input;
 using TestApp.Service;
 using Contact = TestApp.Model.Contact;
@@ -29,6 +30,9 @@ namespace TestApp.ViewModel
             set 
             { 
                 _contactList = value;
+                //observable collection is inheriting INotifyProperChanged but the OnPropertyChanged is not yet invoke.
+                //we need to listen (event handlers) for the changes.
+                OnPropertyChanged(nameof(ContactList));
             }
 
         }
@@ -43,12 +47,25 @@ namespace TestApp.ViewModel
             await Shell.Current.GoToAsync($"{nameof(View.AddContact)}?id={StudentId}");
         }
 
-        private async void LoadContacts()
+        private void LoadContacts()
         {
-            if(StudentId != null)
+            //if(StudentId != null)
+            //{
+            //    ContactList = _contactsService.GetContacts(_studentId).Result;
+            //}
+            string mainDir = FileSystem.Current.AppDataDirectory;
+
+            string contactsFilePath = Path.Combine(mainDir, $"s{_studentId}.json");
+            if (!File.Exists(contactsFilePath))
             {
-                ContactList = await _contactsService.GetContacts(StudentId);
+                ContactList = new ObservableCollection<Contact>();
+                return;
             }
+
+            string json = File.ReadAllText(contactsFilePath);
+            var results =  JsonSerializer.Deserialize<ObservableCollection<Contact>>(json);
+            ContactList = new ObservableCollection<Contact>(results);
+
         }
 
     }

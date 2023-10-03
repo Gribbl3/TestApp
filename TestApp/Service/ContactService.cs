@@ -22,7 +22,6 @@ namespace TestApp.Service
             var json = JsonSerializer.Serialize(contactCollection);
             File.WriteAllText(contactsFilePath, json);
             return Task.FromResult(true);
-
         }
 
         public Task<ObservableCollection<Contact>> GetContacts(string studentId)
