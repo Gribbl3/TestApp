@@ -47,12 +47,13 @@ namespace TestApp.View
             {
                 errMessage.Text = "Login Successful";
                 errMessage.TextColor = Colors.Green;
+                Shell.Current.GoToAsync($"{nameof(Home)}?id={_studentId}");
             }
 
             //check if both or one of the fields is empty
 
             errMessage.IsVisible = true;
-            Shell.Current.GoToAsync($"{nameof(Home)}?id={_studentId}");
+            
         }
 
         private async void OnRegisterTappedCommand()

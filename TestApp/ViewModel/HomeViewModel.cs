@@ -14,28 +14,28 @@ namespace TestApp.ViewModel
         public string StudentId
         {
             get { return _studentId; }
-            set { _studentId = value; OnPropertyChanged(nameof(StudentId)); }
+            set 
+            { 
+                _studentId = value; 
+                OnPropertyChanged(nameof(StudentId)); 
+                LoadContacts(); 
+            }
         }
+
         public ICommand AddContactCommand => new Command(AddContact);
         public ObservableCollection<Contact> ContactList
         {
             get { return _contactList; }
-            set { _contactList = value; }
+            set 
+            { 
+                _contactList = value;
+            }
+
         }
 
         public HomeViewModel(IContactService contactsService)
         {
             _contactsService = contactsService;
-            ContactList = _contactsService.GetContacts(StudentId).Result;
-            //ContactList = new ObservableCollection<Contact>()
-            //{
-            //    new Contact()
-            //    {
-            //        Id = "1",
-            //        FirstName = "John",
-            //        LastName = "Doe",
-            //        Email = ""
-            //    }};
         }
 
         private async void AddContact()
@@ -43,9 +43,12 @@ namespace TestApp.ViewModel
             await Shell.Current.GoToAsync($"{nameof(View.AddContact)}?id={StudentId}");
         }
 
-        private void LoadContacts()
+        private async void LoadContacts()
         {
-            ContactList = _contactsService.GetContacts(StudentId).Result;
+            if(StudentId != null)
+            {
+                ContactList = await _contactsService.GetContacts(StudentId);
+            }
         }
 
     }

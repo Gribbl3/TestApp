@@ -2,15 +2,15 @@
 using System.Windows.Input;
 using TestApp.Model;
 using TestApp.Service;
-
+using Contact = TestApp.Model.Contact;
 namespace TestApp.ViewModel
 {
     [QueryProperty(nameof(StudentId), "id")]
     public class AddContactViewModel : BaseViewModel
     {
         private readonly IContactService _contactService;
-        public Model.Contact Contact { get; set; } = new();
-        private ObservableCollection<Model.Contact> _contactCollection = new();
+        public Contact Contact { get; set; } = new();
+        private ObservableCollection<Contact> _contactCollection;
         public ICommand SubmitCommand => new Command(Submit);
         public ICommand ResetCommand => new Command(ResetForm);
 
@@ -18,7 +18,11 @@ namespace TestApp.ViewModel
         public string StudentId
         {
             get { return _studentId; }
-            set { _studentId = value; OnPropertyChanged(nameof(StudentId)); }
+            set 
+            { 
+                _studentId = value; 
+                OnPropertyChanged(nameof(StudentId)); 
+            }
         }
         public AddContactViewModel(IContactService contactService)
         {
