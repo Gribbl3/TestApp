@@ -137,8 +137,8 @@
                 <Label Text="School Program" />
                 <Border>
                     <Picker
-                        ItemsSource="{Binding Student.SchoolProgramItemSource}"
-                        SelectedItem="{Binding Student.SchoolProgram}"
+                        ItemsSource="{Binding SchoolProgramItemSource}"
+                        SelectedItem="{Binding SelectedSchoolProgram}"
                         ToolTipProperties.Text="Required." />
                 </Border>
             </HorizontalStackLayout>
@@ -147,8 +147,8 @@
                 <Label Text="Course" />
                 <Border>
                     <Picker
-                        ItemsSource="{Binding Student.CourseItemSource}"
-                        SelectedItem="{Binding Student.Course}"
+                        ItemsSource="{Binding CourseItemSource}"
+                        SelectedItem="{Binding SelectedCourse}"
                         ToolTipProperties.Text="Required." />
                 </Border>
             </HorizontalStackLayout>
@@ -157,8 +157,8 @@
                 <Label Text="Year Level" />
                 <Border>
                     <Picker
-                        ItemsSource="{Binding Student.YearLevelItemSource}"
-                        SelectedItem="{Binding Student.YearLevel}"
+                        ItemsSource="{Binding YearLevelItemSource}"
+                        SelectedItem="{Binding SelectedYearLevel}"
                         ToolTipProperties.Text="Required." />
                 </Border>
             </HorizontalStackLayout>

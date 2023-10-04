@@ -10,7 +10,7 @@ namespace TestApp.View
         private string _studentId;
         private ObservableCollection<Student> _studentCollection;
         private readonly IStudentService _studentService;
-        public ICommand OnTappedCommand => new Command(OnRegisterTappedCommand);
+        public ICommand OnTappedCommand { get; set; }
 
         public ObservableCollection<Student> StudentCollection
         {
@@ -19,10 +19,12 @@ namespace TestApp.View
         }
         public MainPage(IStudentService studentService)
         {
-            _studentService = studentService;
             InitializeComponent();
             BindingContext = this;
             Shell.Current.Title = "Window Title";
+
+            _studentService = studentService;
+            OnTappedCommand = new Command(OnRegisterTappedCommand);
         }
 
 
@@ -53,7 +55,7 @@ namespace TestApp.View
             //check if both or one of the fields is empty
 
             errMessage.IsVisible = true;
-            
+
         }
 
         private async void OnRegisterTappedCommand()

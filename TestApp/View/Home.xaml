@@ -19,7 +19,7 @@
 
         <Label Text="{Binding StudentId}"/>
 
-        <CollectionView ItemsSource="{Binding ContactList}">
+        <CollectionView ItemsSource="{Binding ContactCollection}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Contact">
                     <Grid ColumnDefinitions="*,*,*,*,*,*,*,*">

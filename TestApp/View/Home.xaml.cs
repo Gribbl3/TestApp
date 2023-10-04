@@ -10,14 +10,4 @@ public partial class Home : ContentPage
         BindingContext = viewModel;
         Shell.Current.Title = "Home";
     }
-
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-    }
-
-    protected override void OnNavigatedTo(NavigatedToEventArgs args)
-    {
-        base.OnNavigatedTo(args);
-    }
 }

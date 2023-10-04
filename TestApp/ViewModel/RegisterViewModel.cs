@@ -1,100 +1,86 @@
-﻿using System.Windows.Input;
-using TestApp.Model;
+﻿using TestApp.Model;
 using TestApp.Service;
 
 namespace TestApp.ViewModel
 {
-    public class RegisterViewModel
+    public class RegisterViewModel : BaseViewModel
     {
         private readonly IStudentService _studentService;
-        public Student Student { get; set; } = new Student();
-        public ICommand SubmitCommand => new Command(ValidateForm);
-        public ICommand ResetCommand => new Command(ResetForm);
+        private string _selectedYearLevel;
 
+        public Student Student { get; set; } = new Student();
+        public List<string> YearLevelItemSource { get; set; } = new()
+        {
+            "--SELECT--",
+            "First Year",
+            "Second Year",
+            "Third Year",
+            "Fourth Year",
+            "Fifth Year",
+        };
+        public override string SelectedSchoolProgram
+        {
+            get => base.SelectedSchoolProgram;
+            set
+            {
+                base.SelectedSchoolProgram = value;
+                Student.SchoolProgram = value;
+                UpdateCourseItemSource();
+            }
+        }
+        public override string SelectedCourse
+        {
+            get => base.SelectedCourse;
+            set
+            {
+                base.SelectedCourse = value;
+                Student.Course = value;
+            }
+        }
+        public string SelectedYearLevel
+        {
+            get => _selectedYearLevel;
+            set
+            {
+                _selectedYearLevel = value;
+                Student.YearLevel = value;
+            }
+        }
         public RegisterViewModel(IStudentService studentService)
         {
+            SelectedSchoolProgram = SelectedCourse = SelectedYearLevel = pickerDefaultValue;
             _studentService = studentService;
+            SubmitCommand = new Command(ValidateForm);
+            ResetCommand = new Command(ResetForm);
         }
 
         private void ValidateForm()
         {
-            var entries = new[] { Student.Id, Student.FirstName, Student.LastName, Student.Email, Student.Password, Student.ConfirmPassword, Student.BirthDate };
-            foreach (var entry in entries)
+            if (!IsFieldEmpty(Student.Id, "Student Id") || !IsFieldEmpty(Student.FirstName, "First Name") || !IsFieldEmpty(Student.LastName, "Last Name") ||
+                !IsFieldEmpty(Student.Email, "Email") || !IsFieldEmpty(Student.Password, "Password") || !IsFieldEmpty(Student.ConfirmPassword, "Confirm Password") ||
+                !IsFieldEmpty(Student.BirthDate, "Birth Date"))
             {
-                if (string.IsNullOrEmpty(entry))
-                {
-                    // Show error message
-                    Shell.Current.DisplayAlert("Error", entry + " is required", "Ok");
-                    return;
-                }
-            }
-
-            if (Student.Id.Length != 5 || !Student.Id.All(char.IsDigit))
-            {
-                // Show error message
-                Shell.Current.DisplayAlert("Error", "ID must be 5 digits", "Ok");
                 return;
             }
 
-            if (Student.Password.Length < 8)
+            if (!IsMinLength(Student.Id, 5, "Id"))
             {
-                // Show error message
-                Shell.Current.DisplayAlert("Error", "Password must be 8 characters", "Ok");
-            }
-
-            if (Student.Password != Student.ConfirmPassword)
-            {
-                // Show error message
-                Shell.Current.DisplayAlert("Error", "Password and Confirm Password does not match", "Ok");
                 return;
             }
 
-            if (Student.SchoolProgram == Student.SchoolProgramItemSource[0])
+            if (!IsDefaultValue(Student.SchoolProgram, "School Program") || !IsDefaultValue(Student.Course, "Course") ||
+                !IsDefaultValue(Student.YearLevel, "Year Level"))
             {
-                // Show error message
-                Shell.Current.DisplayAlert("Error", "School Program is required", "Ok");
                 return;
             }
-
-            if (Student.Course == Student.SchoolProgramItemSource[0])
-            {
-                // Show error message
-                Shell.Current.DisplayAlert("Error", "Course is required", "Ok");
-                return;
-            }
-
-
-            if (Student.BirthDate == DateTime.Now.ToString("MM/dd/yyyy"))
-            {
-                // Show error message
-                Shell.Current.DisplayAlert("Error", "Birth Date is required", "Ok");
-                return;
-            }
-
-            if (Student.YearLevel == Student.YearLevelItemSource[0])
-            {
-                // Show error message
-                Shell.Current.DisplayAlert("Error", "Year Level is required", "Ok");
-                return;
-            }
-
-            if (Student.Course == Student.CourseItemSource[0])
-            {
-                // Show error message
-                Shell.Current.DisplayAlert("Error", "Course is required", "Ok");
-                return;
-            }
-
             Register();
         }
-
         private void Register()
         {
             _studentService.AddStudent(Student);
             Shell.Current.DisplayAlert("Success", "Student successfully registered", "Ok");
             Shell.Current.GoToAsync($"Home?StudentId={Student.Id}");
         }
-
         private void ResetForm()
         {
             Student.Id = string.Empty;
@@ -110,9 +96,7 @@ namespace TestApp.ViewModel
             Student.IsMaleCheck = false;
             Student.IsFemaleCheck = false;
 
-            Student.SchoolProgram = Student.SchoolProgramItemSource[0];
-            Student.YearLevel = Student.YearLevelItemSource[0];
-            Student.Course = Student.CourseItemSource[0];
+            SelectedCourse = SelectedSchoolProgram = SelectedYearLevel = pickerDefaultValue;
         }
     }
 }

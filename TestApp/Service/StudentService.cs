@@ -21,6 +21,7 @@ namespace TestApp.Service
 
             var json = JsonSerializer.Serialize<ObservableCollection<Student>>(studentCollection);
             File.WriteAllText(usersFilePath, json);
+            File.Create(Path.Combine(mainDir, $"s{student.Id}.json"));
             return Task.FromResult(true);
 
         }

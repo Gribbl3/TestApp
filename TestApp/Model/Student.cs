@@ -2,20 +2,6 @@
 {
     public class Student : BaseModel
     {
-        public List<string> YearLevelItemSource { get; set; } = new()
-        {
-            "--SELECT--",
-            "First Year",
-            "Second Year",
-            "Third Year",
-            "Fourth Year",
-            "Fifth Year",
-        };
-
-        public Student()
-        {
-            YearLevel = YearLevelItemSource[0];
-        }
         public string Gender => IsMaleCheck ? "Male" : "Female";
         private string _password;
         private string _confirmPassword;

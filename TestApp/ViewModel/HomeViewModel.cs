@@ -10,31 +10,30 @@ namespace TestApp.ViewModel
     public class HomeViewModel : BaseViewModel
     {
         private readonly IContactService _contactsService;
-        private ObservableCollection<Contact> _contactList;
+        public ICommand AddContactCommand => new Command(AddContact);
         private string _studentId;
         public string StudentId
         {
             get { return _studentId; }
-            set 
-            { 
-                _studentId = value; 
-                OnPropertyChanged(nameof(StudentId)); 
-                LoadContacts(); 
+            set
+            {
+                _studentId = value;
+                OnPropertyChanged();
+                LoadContacts();
             }
         }
 
-        public ICommand AddContactCommand => new Command(AddContact);
-        public ObservableCollection<Contact> ContactList
+        private ObservableCollection<Contact> _contactCollection;
+        public ObservableCollection<Contact> ContactCollection
         {
-            get { return _contactList; }
-            set 
-            { 
-                _contactList = value;
+            get { return _contactCollection; }
+            set
+            {
+                _contactCollection = value;
                 //observable collection is inheriting INotifyProperChanged but the OnPropertyChanged is not yet invoke.
                 //we need to listen (event handlers) for the changes.
-                OnPropertyChanged(nameof(ContactList));
+                OnPropertyChanged();
             }
-
         }
 
         public HomeViewModel(IContactService contactsService)
@@ -44,6 +43,7 @@ namespace TestApp.ViewModel
 
         private async void AddContact()
         {
+            //pass 
             await Shell.Current.GoToAsync($"{nameof(View.AddContact)}?id={StudentId}");
         }
 
@@ -58,14 +58,13 @@ namespace TestApp.ViewModel
             string contactsFilePath = Path.Combine(mainDir, $"s{_studentId}.json");
             if (!File.Exists(contactsFilePath))
             {
-                ContactList = new ObservableCollection<Contact>();
+                ContactCollection = new ObservableCollection<Contact>();
                 return;
             }
 
             string json = File.ReadAllText(contactsFilePath);
-            var results =  JsonSerializer.Deserialize<ObservableCollection<Contact>>(json);
-            ContactList = new ObservableCollection<Contact>(results);
-
+            var results = JsonSerializer.Deserialize<ObservableCollection<Contact>>(json);
+            ContactCollection = new ObservableCollection<Contact>(results);
         }
 
     }

@@ -50,7 +50,7 @@
                 <HorizontalStackLayout>
                     <Label Text="ID" />
                     <Border>
-                        <Entry Text="{Binding Contact.Id}" MaxLength="5"/>
+                        <Entry MaxLength="5" Text="{Binding Contact.Id}" />
                     </Border>
                 </HorizontalStackLayout>
 
@@ -87,14 +87,14 @@
                 <HorizontalStackLayout>
                     <Label Text="School" />
                     <Border>
-                        <Picker ItemsSource="{Binding Contact.SchoolProgramItemSource}" SelectedItem="{Binding Contact.SchoolProgram}" />
+                        <Picker ItemsSource="{Binding SchoolProgramItemSource}" SelectedItem="{Binding SelectedSchoolProgram}" />
                     </Border>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout>
                     <Label Text="Course" />
                     <Border>
-                        <Picker ItemsSource="{Binding Contact.CourseItemSource}" SelectedItem="{Binding Contact.Course}" />
+                        <Picker ItemsSource="{Binding CourseItemSource}" SelectedItem="{Binding SelectedCourse}" />
                     </Border>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
@@ -104,8 +104,14 @@
                 Grid.ColumnSpan="2"
                 HorizontalOptions="Center"
                 Spacing="10">
-                <Button Background="#0090ff" Text="Submit" Command="{Binding SubmitCommand}"/>
-                <Button Background="{StaticResource Gray300Brush}" Text="Reset" Command="{Binding ResetCommand}" />
+                <Button
+                    Background="#0090ff"
+                    Command="{Binding SubmitCommand}"
+                    Text="Submit" />
+                <Button
+                    Background="{StaticResource Gray300Brush}"
+                    Command="{Binding ResetCommand}"
+                    Text="Reset" />
             </HorizontalStackLayout>
 
         </Grid>
