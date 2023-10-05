@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Windows.Input;
 using TestApp.Service;
 using Contact = TestApp.Model.Contact;
@@ -44,27 +43,15 @@ namespace TestApp.ViewModel
         private async void AddContact()
         {
             //pass 
-            await Shell.Current.GoToAsync($"{nameof(View.AddContact)}?id={StudentId}");
+            await Shell.Current.GoToAsync($"{nameof(AddContact)}?id={StudentId}&contacts={_contactCollection}");
         }
 
         private void LoadContacts()
         {
-            //if(StudentId != null)
-            //{
-            //    ContactList = _contactsService.GetContacts(_studentId).Result;
-            //}
-            string mainDir = FileSystem.Current.AppDataDirectory;
-
-            string contactsFilePath = Path.Combine(mainDir, $"s{_studentId}.json");
-            if (!File.Exists(contactsFilePath))
+            if (StudentId != null)
             {
-                ContactCollection = new ObservableCollection<Contact>();
-                return;
+                ContactCollection = _contactsService.GetContacts(_studentId).Result;
             }
-
-            string json = File.ReadAllText(contactsFilePath);
-            var results = JsonSerializer.Deserialize<ObservableCollection<Contact>>(json);
-            ContactCollection = new ObservableCollection<Contact>(results);
         }
 
     }

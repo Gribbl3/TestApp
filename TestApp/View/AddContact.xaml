@@ -38,8 +38,8 @@
     <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
         <HorizontalStackLayout Margin="0,0,0,5" Spacing="20">
             <Label Text="Type" />
-            <RadioButton Content="Faculty" />
-            <RadioButton Content="Student" />
+            <RadioButton Content="Faculty" IsChecked="{Binding IsFaculty}"/>
+            <RadioButton Content="Student" IsChecked="{Binding IsStudent}"/>
         </HorizontalStackLayout>
         <Grid
             ColumnDefinitions="*,*"

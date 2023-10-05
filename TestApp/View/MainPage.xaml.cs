@@ -10,7 +10,7 @@ namespace TestApp.View
         private string _studentId;
         private ObservableCollection<Student> _studentCollection;
         private readonly IStudentService _studentService;
-        public ICommand OnTappedCommand { get; set; }
+        public ICommand OnTappedCommand => new Command(OnRegisterTappedCommand);
 
         public ObservableCollection<Student> StudentCollection
         {
@@ -20,11 +20,10 @@ namespace TestApp.View
         public MainPage(IStudentService studentService)
         {
             InitializeComponent();
+
             BindingContext = this;
             Shell.Current.Title = "Window Title";
-
             _studentService = studentService;
-            OnTappedCommand = new Command(OnRegisterTappedCommand);
         }
 
 

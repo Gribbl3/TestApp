@@ -7,7 +7,13 @@
     xmlns:vm="clr-namespace:TestApp.ViewModel"
     Title="Home"
     x:DataType="vm:HomeViewModel">
-    <StackLayout Margin="20" Spacing="10">
+    <!--<ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="HorizontalTextAlignment" Value="         
+        </Style>
+    </ContentPage.Resources>-->
+    <ScrollView>
+        <StackLayout Margin="20" Spacing="10">
         <Button
             Background="#0090ff"
             Command="{Binding AddContactCommand}"
@@ -17,23 +23,23 @@
             HorizontalOptions="End"
             Text="+" />
 
-        <Label Text="{Binding StudentId}"/>
-
         <CollectionView ItemsSource="{Binding ContactCollection}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Contact">
-                    <Grid ColumnDefinitions="*,*,*,*,*,*,*,*">
+                    <Grid WidthRequest="1000" ColumnDefinitions="*,*,*,*,*,*,*,*" ColumnSpacing="20" Margin="20"
+                          VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Firebrick">
                         <Label Grid.Column="0" Text="{Binding Id}" />
                         <Label Grid.Column="1" Text="{Binding LastName}" />
                         <Label Grid.Column="2" Text="{Binding FirstName}" />
                         <Label Grid.Column="3" Text="{Binding SchoolProgram}" />
                         <Label Grid.Column="4" Text="{Binding Course}" />
                         <Label Grid.Column="5" Text="{Binding Email}" />
-                        <Label Grid.Column="6" Text="{Binding MobileNumber}" />
-                        <Label Grid.Column="7" Text="{Binding Type}" />
+                        <Label Grid.Column="6" Text="{Binding MobileNumber,TargetNullValue='N/A'}" />
+                            <Label Grid.Column="7" Text="{Binding Type, TargetNullValue='N/A'}" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
     </StackLayout>
+    </ScrollView>
 </ContentPage>

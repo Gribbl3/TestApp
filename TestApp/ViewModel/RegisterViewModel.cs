@@ -1,12 +1,15 @@
-﻿using TestApp.Model;
+﻿using System.Collections.ObjectModel;
+using TestApp.Model;
 using TestApp.Service;
+using TestApp.View;
+
 
 namespace TestApp.ViewModel
 {
     public class RegisterViewModel : BaseViewModel
     {
         private readonly IStudentService _studentService;
-        private string _selectedYearLevel;
+        private ObservableCollection<Student> _studentCollection;
 
         public Student Student { get; set; } = new Student();
         public List<string> YearLevelItemSource { get; set; } = new()
@@ -18,6 +21,7 @@ namespace TestApp.ViewModel
             "Fourth Year",
             "Fifth Year",
         };
+
         public override string SelectedSchoolProgram
         {
             get => base.SelectedSchoolProgram;
@@ -37,6 +41,8 @@ namespace TestApp.ViewModel
                 Student.Course = value;
             }
         }
+
+        private string _selectedYearLevel;
         public string SelectedYearLevel
         {
             get => _selectedYearLevel;
@@ -46,12 +52,14 @@ namespace TestApp.ViewModel
                 Student.YearLevel = value;
             }
         }
+
         public RegisterViewModel(IStudentService studentService)
         {
-            SelectedSchoolProgram = SelectedCourse = SelectedYearLevel = pickerDefaultValue;
-            _studentService = studentService;
             SubmitCommand = new Command(ValidateForm);
             ResetCommand = new Command(ResetForm);
+
+            SelectedSchoolProgram = SelectedCourse = SelectedYearLevel = pickerDefaultValue;
+            _studentService = studentService;
         }
 
         private void ValidateForm()
@@ -73,14 +81,41 @@ namespace TestApp.ViewModel
             {
                 return;
             }
+
+            if (IsStudentIdExisting())
+            {
+                return;
+            }
+
             Register();
         }
+
+        private bool IsStudentIdExisting()
+        {
+            _studentCollection = _studentService.GetStudentCollection().Result;
+            foreach (var student in _studentCollection)
+            {
+                if (student.Id == Student.Id)
+                {
+                    Shell.Current.DisplayAlert("Error", "Student Id already exists", "Ok");
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void Register()
         {
             _studentService.AddStudent(Student);
             Shell.Current.DisplayAlert("Success", "Student successfully registered", "Ok");
-            Shell.Current.GoToAsync($"Home?StudentId={Student.Id}");
+            NavigateBack();
         }
+
+        private async void NavigateBack()
+        {
+            await Shell.Current.GoToAsync($"{nameof(Home)}?StudentId={Student.Id}");
+        }
+
         private void ResetForm()
         {
             Student.Id = string.Empty;
@@ -95,6 +130,9 @@ namespace TestApp.ViewModel
 
             Student.IsMaleCheck = false;
             Student.IsFemaleCheck = false;
+
+            //reset form by creating a new instance of Student
+            //Student = new Student();
 
             SelectedCourse = SelectedSchoolProgram = SelectedYearLevel = pickerDefaultValue;
         }

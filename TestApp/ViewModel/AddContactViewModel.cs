@@ -1,7 +1,9 @@
-﻿using TestApp.Service;
+﻿using System.Collections.ObjectModel;
+using TestApp.Service;
 using Contact = TestApp.Model.Contact;
 namespace TestApp.ViewModel
 {
+    [QueryProperty(nameof(ContactCollection), "contacts")]
     [QueryProperty(nameof(StudentId), "id")]
     public class AddContactViewModel : BaseViewModel
     {
@@ -16,6 +18,41 @@ namespace TestApp.ViewModel
             {
                 _studentId = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Contact> _contactCollection;
+        public ObservableCollection<Contact> ContactCollection
+        {
+            get { return _contactCollection; }
+            set
+            {
+                _contactCollection = value;
+                //observable collection is inheriting INotifyProperChanged but the OnPropertyChanged is not yet invoke.
+                //we need to listen (event handlers) for the changes.
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isFaculty;
+        public bool IsFaculty
+        {
+            get { return _isFaculty; }
+            set
+            {
+                _isFaculty = value;
+                Contact.Type = value.ToString();
+            }
+        }
+
+        private bool _isStudent;
+        public bool IsStudent
+        {
+            get { return _isStudent; }
+            set
+            {
+                _isStudent = value;
+                Contact.Type = value.ToString();
             }
         }
 
@@ -50,8 +87,12 @@ namespace TestApp.ViewModel
             {
                 _contactService.AddContact(Contact, StudentId);
                 Shell.Current.DisplayAlert("Success", "Contact added successfully", "Ok");
-                Shell.Current.GoToAsync("..");
+                NavigateBack();
             }
+        }
+        private async void NavigateBack()
+        {
+            await Shell.Current.GoToAsync($"..?id={StudentId}");
         }
         private bool ValidateForm()
         {
@@ -74,9 +115,11 @@ namespace TestApp.ViewModel
             return true;
         }
 
-        private void ResetForm(object obj)
+        private void ResetForm()
         {
-            throw new NotImplementedException();
+            Contact.Id = Contact.FirstName = Contact.LastName = Contact.Email = Contact.MobileNumber = string.Empty;
+            IsFaculty = IsStudent = false;
+            SelectedSchoolProgram = SelectedCourse = pickerDefaultValue;
         }
     }
 }
