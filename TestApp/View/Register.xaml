@@ -108,8 +108,8 @@
         <VerticalStackLayout Grid.Column="1">
             <HorizontalStackLayout>
                 <Label Text="Gender" />
-                <RadioButton Content="Male" IsChecked="{Binding Student.IsMaleCheck}" />
-                <RadioButton Content="Female" IsChecked="{Binding Student.IsFemaleCheck}" />
+                <RadioButton Content="Male" IsChecked="{Binding IsMaleChecked}" />
+                <RadioButton Content="Female" IsChecked="{Binding IsFemaleChecked}" />
             </HorizontalStackLayout>
 
             <HorizontalStackLayout>

@@ -8,8 +8,7 @@ namespace TestApp.ViewModel
     public class BaseViewModel : INotifyPropertyChanged
     {
         protected readonly string pickerDefaultValue = "--SELECT--";
-        public ICommand SubmitCommand { get; protected set; }
-        public ICommand ResetCommand { get; protected set; }
+
         public virtual string SelectedSchoolProgram { get; set; }
         public virtual string SelectedCourse { get; set; }
         public List<string> SchoolProgramItemSource { get; } = new()
@@ -90,6 +89,20 @@ namespace TestApp.ViewModel
                     break;
             }
         }
+        #region Commands for student and contact views
+        public ICommand SubmitCommand => new Command(Register);
+        public virtual void Register()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICommand ResetCommand => new Command(ResetForm);
+        public virtual void ResetForm()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
         #region Validation
         //entries validation
         protected bool IsFieldEmpty(string value, string fieldName)

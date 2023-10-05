@@ -29,8 +29,6 @@ namespace TestApp.ViewModel
             set
             {
                 _contactCollection = value;
-                //observable collection is inheriting INotifyProperChanged but the OnPropertyChanged is not yet invoke.
-                //we need to listen (event handlers) for the changes.
                 OnPropertyChanged();
             }
         }
@@ -43,7 +41,7 @@ namespace TestApp.ViewModel
         private async void AddContact()
         {
             //pass 
-            await Shell.Current.GoToAsync($"{nameof(AddContact)}?id={StudentId}&contacts={_contactCollection}");
+            await Shell.Current.GoToAsync($"{nameof(AddContact)}?id={StudentId}");
         }
 
         private void LoadContacts()

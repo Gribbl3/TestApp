@@ -11,6 +11,7 @@ namespace TestApp
             Routing.RegisterRoute(nameof(Register), typeof(Register));
             Routing.RegisterRoute(nameof(Home), typeof(Home));
             Routing.RegisterRoute(nameof(AddContact), typeof(AddContact));
+            //mainpage->register-home -addcontact-mainpage
         }
 
     }

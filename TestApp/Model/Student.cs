@@ -2,15 +2,13 @@
 {
     public class Student : BaseModel
     {
-        public string Gender => IsMaleCheck ? "Male" : "Female";
+        
         private string _password;
         private string _confirmPassword;
         private string _yearLevel;
         private string _birthDate;
         private string _city;
-        private bool _isMaleCheck;
-        private bool _isFemaleCheck;
-
+        private string _gender;
         public string Password
         {
             get => _password;
@@ -61,22 +59,12 @@
             }
         }
 
-        public bool IsMaleCheck
+        public string Gender
         {
-            get => _isMaleCheck;
+            get => _gender;
             set
             {
-                _isMaleCheck = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsFemaleCheck
-        {
-            get => _isFemaleCheck;
-            set
-            {
-                _isFemaleCheck = value;
+                _gender = value;
                 OnPropertyChanged();
             }
         }

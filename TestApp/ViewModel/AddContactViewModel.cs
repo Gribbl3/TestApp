@@ -3,11 +3,10 @@ using TestApp.Service;
 using Contact = TestApp.Model.Contact;
 namespace TestApp.ViewModel
 {
-    [QueryProperty(nameof(ContactCollection), "contacts")]
     [QueryProperty(nameof(StudentId), "id")]
     public class AddContactViewModel : BaseViewModel
     {
-        private readonly IContactService _contactService;
+        private readonly IContactService _contactsService;
         public Contact Contact { get; set; } = new Contact();
 
         private string _studentId;
@@ -18,6 +17,7 @@ namespace TestApp.ViewModel
             {
                 _studentId = value;
                 OnPropertyChanged();
+                LoadContacts();
             }
         }
 
@@ -41,7 +41,8 @@ namespace TestApp.ViewModel
             set
             {
                 _isFaculty = value;
-                Contact.Type = value.ToString();
+                OnPropertyChanged();
+                UpdateType();
             }
         }
 
@@ -52,15 +53,26 @@ namespace TestApp.ViewModel
             set
             {
                 _isStudent = value;
-                Contact.Type = value.ToString();
+                OnPropertyChanged();
+                UpdateType();
+            }
+        }
+        
+        private void UpdateType()
+        {
+            if (IsFaculty)
+            {
+                Contact.Type = "Faculty";
+            }
+            else
+            {
+                Contact.Type = "Student";
             }
         }
 
-        public AddContactViewModel(IContactService contactService)
+        public AddContactViewModel(IContactService contactsService)
         {
-            _contactService = contactService;
-            SubmitCommand = new Command(Submit);
-            ResetCommand = new Command(ResetForm);
+            _contactsService = contactsService;
         }
         public override string SelectedSchoolProgram
         {
@@ -81,11 +93,11 @@ namespace TestApp.ViewModel
                 Contact.Course = value;
             }
         }
-        private void Submit()
+        public override void Register()
         {
             if (ValidateForm())
             {
-                _contactService.AddContact(Contact, StudentId);
+                _contactsService.AddContact(Contact, StudentId);
                 Shell.Current.DisplayAlert("Success", "Contact added successfully", "Ok");
                 NavigateBack();
             }
@@ -96,8 +108,8 @@ namespace TestApp.ViewModel
         }
         private bool ValidateForm()
         {
-            if (IsFieldEmpty(Contact.Id, "Contact Id") || IsFieldEmpty(Contact.FirstName, "First Name") || IsFieldEmpty(Contact.LastName, "Last Name") ||
-                IsFieldEmpty(Contact.Email, "Email"))
+            if (IsFieldEmpty(Contact.Id, "Contact Id") || IsFieldEmpty(Contact.FirstName, "First Name") || 
+                IsFieldEmpty(Contact.LastName, "Last Name") || IsFieldEmpty(Contact.Email, "Email"))
             {
                 return false;
             }
@@ -112,14 +124,23 @@ namespace TestApp.ViewModel
                 return false;
             }
 
+            if()
             return true;
         }
 
-        private void ResetForm()
+        public override void ResetForm()
         {
             Contact.Id = Contact.FirstName = Contact.LastName = Contact.Email = Contact.MobileNumber = string.Empty;
             IsFaculty = IsStudent = false;
             SelectedSchoolProgram = SelectedCourse = pickerDefaultValue;
+        }
+
+        private void LoadContacts()
+        {
+            if (StudentId != null)
+            {
+                ContactCollection = _contactsService.GetContacts(_studentId).Result;
+            }
         }
     }
 }
