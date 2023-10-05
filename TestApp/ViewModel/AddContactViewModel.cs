@@ -57,7 +57,7 @@ namespace TestApp.ViewModel
                 UpdateType();
             }
         }
-        
+
         private void UpdateType()
         {
             if (IsFaculty)
@@ -108,7 +108,7 @@ namespace TestApp.ViewModel
         }
         private bool ValidateForm()
         {
-            if (IsFieldEmpty(Contact.Id, "Contact Id") || IsFieldEmpty(Contact.FirstName, "First Name") || 
+            if (IsFieldEmpty(Contact.Id, "Contact Id") || IsFieldEmpty(Contact.FirstName, "First Name") ||
                 IsFieldEmpty(Contact.LastName, "Last Name") || IsFieldEmpty(Contact.Email, "Email"))
             {
                 return false;
@@ -124,7 +124,11 @@ namespace TestApp.ViewModel
                 return false;
             }
 
-            if()
+            if (IsStudentIdExisting())
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -141,6 +145,20 @@ namespace TestApp.ViewModel
             {
                 ContactCollection = _contactsService.GetContacts(_studentId).Result;
             }
+        }
+
+        private bool IsStudentIdExisting()
+        {
+            _contactCollection = _contactsService.GetContacts(StudentId).Result;
+            foreach (var contact in _contactCollection)
+            {
+                if (contact.Id == Contact.Id)
+                {
+                    Shell.Current.DisplayAlert("Error", "Contact Id already exists", "Ok");
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

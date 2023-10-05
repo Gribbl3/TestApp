@@ -21,9 +21,14 @@ namespace TestApp.Service
 
             var json = JsonSerializer.Serialize<ObservableCollection<Student>>(studentCollection);
             File.WriteAllText(usersFilePath, json);
-            File.Create(Path.Combine(mainDir, $"s{student.Id}.json"));
-            return Task.FromResult(true);
 
+            //Writing contacts file instead of creating a new one because it's easier to test
+            CreateContactsFile(student.Id);
+            return Task.FromResult(true);
+        }
+        private async void CreateContactsFile(string studentId)
+        {
+            await File.WriteAllTextAsync(Path.Combine(mainDir, $"s{studentId}.json"), string.Empty);
         }
 
         public Task<ObservableCollection<Student>> GetStudentCollection()

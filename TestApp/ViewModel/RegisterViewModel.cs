@@ -65,7 +65,7 @@ namespace TestApp.ViewModel
                 _isMaleChecked = value;
                 OnPropertyChanged();
                 UpdateGender();
-                
+
             }
         }
 
@@ -75,7 +75,7 @@ namespace TestApp.ViewModel
             get => _isFemaleChecked;
             set
             {
-                _isFemaleChecked = value;   
+                _isFemaleChecked = value;
                 OnPropertyChanged();
                 UpdateGender();
             }
@@ -85,7 +85,7 @@ namespace TestApp.ViewModel
         {
             if (IsMaleChecked)
             {
-                Student.Gender = "Male"; 
+                Student.Gender = "Male";
             }
             else
             {
@@ -102,7 +102,7 @@ namespace TestApp.ViewModel
         public override void Register()
         {
             if (ValidateForm())
-            { 
+            {
                 _studentService.AddStudent(Student);
                 Shell.Current.DisplayAlert("Success", "Student successfully registered", "Ok");
                 NavigateBack();
@@ -114,14 +114,14 @@ namespace TestApp.ViewModel
             if (IsFieldEmpty(Student.Id, "Student Id") || IsFieldEmpty(Student.FirstName, "First Name") || IsFieldEmpty(Student.LastName, "Last Name") ||
                 IsFieldEmpty(Student.Email, "Email") || IsFieldEmpty(Student.Password, "Password") || IsFieldEmpty(Student.ConfirmPassword, "Confirm Password") ||
                 IsFieldEmpty(Student.BirthDate, "Birth Date")) return false;
-            
+
             if (!IsMinLength(Student.Id, 5, "Id")) return false;
-            
+
             if (!IsDefaultValue(Student.SchoolProgram, "School Program") || !IsDefaultValue(Student.Course, "Course") ||
                 !IsDefaultValue(Student.YearLevel, "Year Level")) return false;
-        
+
             if (IsStudentIdExisting()) return false;
-          
+
             if (IsMaleChecked == false && IsFemaleChecked == false) return false;
 
             return true;
@@ -144,12 +144,12 @@ namespace TestApp.ViewModel
 
         private async void NavigateBack()
         {
-            await Shell.Current.GoToAsync($"{nameof(Home)}?StudentId={Student.Id}");
+            await Shell.Current.GoToAsync($"{nameof(Home)}?id={Student.Id}");
         }
 
         public override void ResetForm()
         {
-            Student.Id = Student.FirstName = Student.LastName = Student.Email = Student.MobileNumber = 
+            Student.Id = Student.FirstName = Student.LastName = Student.Email = Student.MobileNumber =
                 Student.Password = Student.ConfirmPassword = Student.City = Student.BirthDate = string.Empty;
 
 

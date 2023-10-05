@@ -27,8 +27,13 @@ namespace TestApp.Service
         public Task<ObservableCollection<Contact>> GetContacts(string studentId)
         {
             string contactsFilePath = Path.Combine(mainDir, $"s{studentId}.json");
+            if (!File.Exists(contactsFilePath))
+            {
+                return Task.FromResult(new ObservableCollection<Contact>());
+            }
+
             string json = File.ReadAllText(contactsFilePath);
-            if(json == string.Empty)
+            if (json == string.Empty)
             {
                 return Task.FromResult(new ObservableCollection<Contact>());
             }

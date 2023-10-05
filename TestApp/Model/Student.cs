@@ -2,7 +2,7 @@
 {
     public class Student : BaseModel
     {
-        
+
         private string _password;
         private string _confirmPassword;
         private string _yearLevel;
@@ -44,7 +44,12 @@
             get => _birthDate;
             set
             {
-                _birthDate = value;
+                //convert to yyyy-MM-dd format
+                if (DateTime.TryParse(value, out DateTime parsedDate))
+                {
+                    _birthDate = parsedDate.ToString("yyyy-MM-dd");
+                    return;
+                }
                 OnPropertyChanged();
             }
         }
