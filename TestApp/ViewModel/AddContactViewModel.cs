@@ -154,7 +154,7 @@ namespace TestApp.ViewModel
             {
                 if (contact.Id == Contact.Id)
                 {
-                    Shell.Current.DisplayAlert("Error", "Contact Id already exists", "Ok");
+                    Shell.Current.DisplayAlert("Error", "Student Id already exists", "Ok");
                     return true;
                 }
             }

@@ -8,6 +8,11 @@ public partial class Register : ContentPage
     {
         InitializeComponent();
         BindingContext = viewModel;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
         Shell.Current.Title = "Register";
     }
 }

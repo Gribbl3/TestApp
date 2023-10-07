@@ -25,13 +25,11 @@ namespace TestApp.View
             Shell.Current.Title = "Window Title";
             _studentService = studentService;
         }
-        
+
         public MainPage()
         {
             InitializeComponent();
-
             BindingContext = this;
-            Shell.Current.Title = "Window Title";
         }
 
         private void OnButtonClicked(object sender, EventArgs e)
@@ -86,6 +84,7 @@ namespace TestApp.View
         {
             base.OnAppearing();
             StudentCollection = _studentService.GetStudentCollection().Result;
+            Shell.Current.Title = "Window Title";
         }
     }
 }

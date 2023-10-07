@@ -8,6 +8,11 @@ public partial class AddContact : ContentPage
     {
         InitializeComponent();
         BindingContext = viewModel;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
         Shell.Current.Title = "Add Contact";
     }
 }
