@@ -7,9 +7,20 @@
     xmlns:vm="clr-namespace:TestApp.ViewModel"
     Title="Home"
     x:DataType="vm:HomeViewModel">
-    <ScrollView>
-        <StackLayout Margin="20" Spacing="10">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Grid">
+                <Setter Property="Margin" Value="20" />
+                <Setter Property="ColumnSpacing" Value="20" />
+                <Setter Property="WidthRequest" Value="1000" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView Margin="0,20">
+        <StackLayout Spacing="10">
             <Button
+                Margin="0,0,20,0"
                 Background="#0090ff"
                 Command="{Binding AddContactCommand}"
                 CornerRadius="12"
@@ -18,16 +29,23 @@
                 HorizontalOptions="End"
                 Text="+" />
 
+            <Grid ColumnDefinitions="100,*,*,*,*,*,*,*">
+                <Label Grid.Column="0" Text="ID" />
+                <Label Grid.Column="1" Text="Last Name" />
+                <Label Grid.Column="2" Text="First Name" />
+                <Label Grid.Column="3" Text="School Program" />
+                <Label Grid.Column="4" Text="Course" />
+                <Label Grid.Column="5" Text="Email" />
+                <Label Grid.Column="6" Text="Mobile Number" />
+                <Label Grid.Column="7" Text="Type" />
+            </Grid>
+
             <CollectionView ItemsSource="{Binding ContactCollection}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Contact">
                         <Grid
-                            Margin="20"
-                            BackgroundColor="Firebrick"
-                            ColumnDefinitions="*,*,*,*,*,*,*,*"
-                            ColumnSpacing="20"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
+                            Margin="0,0,0,20"
+                            ColumnDefinitions="100,*,*,*,*,*,*,*"
                             WidthRequest="1000">
                             <Label Grid.Column="0" Text="{Binding Id}" />
                             <Label Grid.Column="1" Text="{Binding LastName}" />

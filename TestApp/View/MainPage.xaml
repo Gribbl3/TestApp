@@ -2,7 +2,9 @@
 <ContentPage
     x:Class="TestApp.View.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TestApp.ViewModel"
+    x:DataType="local:MainPageViewModel">
     <ContentPage.Resources>
         <Style TargetType="Border">
             <Setter Property="Stroke" Value="black" />
@@ -19,24 +21,24 @@
             <Label Text="Student ID" />
             <Border>
                 <Entry
-                    x:Name="usernameEntry"
                     MaxLength="20"
                     Placeholder="Student ID"
+                    Text="{Binding StudentId}"
                     VerticalOptions="Center" />
             </Border>
 
             <Label Text="Password" />
             <Border>
                 <Entry
-                    x:Name="passwordEntry"
+                    Text="{Binding Password}" 
+                    Placeholder="*******"
                     IsPassword="True"
-                    MaxLength="20"
-                    Placeholder="*******" />
+                    MaxLength="20"/>
             </Border>
 
             <Button
                 BackgroundColor="#0090ff"
-                Clicked="OnButtonClicked"
+                Command="{Binding OnButtonClickedCommand}"
                 FontAttributes="Bold"
                 Text="Login"
                 TextColor="White" />
@@ -52,7 +54,7 @@
                 </Label.GestureRecognizers>
             </Label>
 
-            <Label x:Name="errMessage" IsVisible="false" />
+            <Label IsVisible="{Binding IsErrorVisible}" Text="{Binding ErrorMessage}" />
         </VerticalStackLayout>
     </ScrollView>
 

@@ -25,7 +25,7 @@ namespace TestApp
             builder.Services.AddTransient<RegisterViewModel>();
             builder.Services.AddTransient<AddContactViewModel>();
             builder.Services.AddTransient<HomeViewModel>();
-            builder.Services.AddTransient<RegisterViewModel>();
+            builder.Services.AddTransient<MainPageViewModel>();
 
             //views
             builder.Services.AddTransient<AddContact>();
