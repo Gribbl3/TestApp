@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TestApp.View.AddContact"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:TestApp.ViewModel"
+    Title="AddContact"
+    x:DataType="vm:AddContactViewModel">
+    <ContentPage.Resources>
+
+        <Style TargetType="Label">
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="WidthRequest" Value="100" />
+        </Style>
+
+        <Style TargetType="Border">
+            <Setter Property="Stroke" Value="Black" />
+        </Style>
+
+        <Style TargetType="VerticalStackLayout">
+            <Setter Property="Spacing" Value="10" />
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="WidthRequest" Value="200" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="WidthRequest" Value="100" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="12" />
+        </Style>
+
+        <Style TargetType="Picker">
+            <Setter Property="WidthRequest" Value="200" />
+        </Style>
+    </ContentPage.Resources>
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <HorizontalStackLayout Margin="0,0,0,5" Spacing="20">
+            <Label Text="Type" />
+            <RadioButton Content="Faculty" IsChecked="{Binding IsFaculty}"/>
+            <RadioButton Content="Student" IsChecked="{Binding IsStudent}"/>
+        </HorizontalStackLayout>
+        <Grid
+            ColumnDefinitions="*,*"
+            ColumnSpacing="20"
+            RowDefinitions="*,*"
+            RowSpacing="30">
+            <VerticalStackLayout>
+                <HorizontalStackLayout>
+                    <Label Text="ID" />
+                    <Border>
+                        <Entry MaxLength="5" Text="{Binding Contact.Id}" />
+                    </Border>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout>
+                    <Label Text="First Name" />
+                    <Border>
+                        <Entry Text="{Binding Contact.FirstName}" />
+                    </Border>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout>
+                    <Label Text="Last Name" />
+                    <Border>
+                        <Entry Text="{Binding Contact.LastName}" />
+                    </Border>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout>
+                    <Label Text="Email" />
+                    <Border>
+                        <Entry Text="{Binding Contact.Email}" />
+                    </Border>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1">
+                <HorizontalStackLayout>
+                    <Label Text="Mobile No." />
+                    <Border>
+                        <Entry Text="{Binding Contact.MobileNumber}" />
+                    </Border>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout>
+                    <Label Text="School" />
+                    <Border>
+                        <Picker ItemsSource="{Binding SchoolProgramItemSource}" SelectedItem="{Binding SelectedSchoolProgram}" />
+                    </Border>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout>
+                    <Label Text="Course" />
+                    <Border>
+                        <Picker ItemsSource="{Binding CourseItemSource}" SelectedItem="{Binding SelectedCourse}" />
+                    </Border>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <HorizontalStackLayout
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                HorizontalOptions="Center"
+                Spacing="10">
+                <Button
+                    Background="#0090ff"
+                    Command="{Binding SubmitCommand}"
+                    Text="Submit" />
+                <Button
+                    Background="{StaticResource Gray300Brush}"
+                    Command="{Binding ResetCommand}"
+                    Text="Reset" />
+            </HorizontalStackLayout>
+
+        </Grid>
+    </StackLayout>
+</ContentPage>

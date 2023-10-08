@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TestApp.View.Register"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TestApp.ViewModel"
+    Title="Register"
+    x:DataType="local:RegisterViewModel">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="WidthRequest" Value="100" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="WidthRequest" Value="200" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="Placeholder" Value="" />
+        </Style>
+
+        <Style TargetType="VerticalStackLayout">
+            <Setter Property="Spacing" Value="10" />
+        </Style>
+
+        <Style TargetType="Picker">
+            <Setter Property="WidthRequest" Value="200" />
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="WidthRequest" Value="200" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="WidthRequest" Value="100" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="12" />
+        </Style>
+
+
+
+
+    </ContentPage.Resources>
+
+    <Grid
+        Margin="20"
+        ColumnDefinitions="Auto,Auto"
+        ColumnSpacing="20"
+        HorizontalOptions="Center"
+        RowDefinitions="Auto,20*"
+        RowSpacing="10"
+        VerticalOptions="Start">
+        <!--  1st Column  -->
+        <VerticalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Student ID" />
+                <Border>
+                    <Entry
+                        MaxLength="5"
+                        Text="{Binding Student.Id}"
+                        ToolTipProperties.Text="Required. Numeric values only" />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="First Name" />
+                <Border>
+                    <Entry Text="{Binding Student.FirstName}" ToolTipProperties.Text="Required." />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Last Name" />
+                <Border>
+                    <Entry Text="{Binding Student.LastName}" ToolTipProperties.Text="Required." />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Email" />
+                <Border>
+                    <Entry Text="{Binding Student.Email}" ToolTipProperties.Text="Required." />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Password" />
+                <Border>
+                    <Entry
+                        IsPassword="True"
+                        Text="{Binding Student.Password}"
+                        ToolTipProperties.Text="Required. Minimum of 8 characters." />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Confirm Password" />
+                <Border>
+                    <Entry
+                        IsPassword="True"
+                        Text="{Binding Student.ConfirmPassword}"
+                        ToolTipProperties.Text="Input from “Password” and “Confirm Password” should match." />
+                </Border>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <!--  2nd Column  -->
+        <VerticalStackLayout Grid.Column="1">
+            <HorizontalStackLayout>
+                <Label Text="Gender" />
+                <RadioButton Content="Male" IsChecked="{Binding IsMaleChecked}" />
+                <RadioButton Content="Female" IsChecked="{Binding IsFemaleChecked}" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Birth Date" />
+                <Border>
+                    <DatePicker Date="{Binding Student.BirthDate}" ToolTipProperties.Text="Optional" />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Mobile Number" />
+                <Border>
+                    <Entry Text="{Binding Student.MobileNumber}" ToolTipProperties.Text="Number input only." />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="City" />
+                <Border>
+                    <Entry Text="{Binding Student.City}" ToolTipProperties.Text="Optional." />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="School Program" />
+                <Border>
+                    <Picker
+                        ItemsSource="{Binding SchoolProgramItemSource}"
+                        SelectedItem="{Binding SelectedSchoolProgram}"
+                        ToolTipProperties.Text="Required." />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Course" />
+                <Border>
+                    <Picker
+                        ItemsSource="{Binding CourseItemSource}"
+                        SelectedItem="{Binding SelectedCourse}"
+                        ToolTipProperties.Text="Required." />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Year Level" />
+                <Border>
+                    <Picker
+                        ItemsSource="{Binding YearLevelItemSource}"
+                        SelectedItem="{Binding SelectedYearLevel}"
+                        ToolTipProperties.Text="Required." />
+                </Border>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <HorizontalStackLayout
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Center"
+            Spacing="15">
+            <Button
+                Background="#0090ff"
+                Command="{Binding SubmitCommand}"
+                Text="Submit"
+                ToolTipProperties.Text="Submits the form for registration." />
+            <Button
+                Background="{StaticResource Gray300Brush}"
+                Command="{Binding ResetCommand}"
+                Text="Reset" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>
