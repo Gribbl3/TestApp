@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TestApp.View.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TestApp.ViewModel"
+    x:DataType="local:MainPageViewModel">
+    <ContentPage.Resources>
+        <Style TargetType="Border">
+            <Setter Property="Stroke" Value="black" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+
+        <VerticalStackLayout
+            Padding="400,10"
+            Spacing="12"
+            VerticalOptions="Center">
+
+            <Label Text="Student ID" />
+            <Border>
+                <Entry
+                    MaxLength="20"
+                    Placeholder="Student ID"
+                    Text="{Binding StudentId}"
+                    VerticalOptions="Center" />
+            </Border>
+
+            <Label Text="Password" />
+            <Border>
+                <Entry
+                    Text="{Binding Password}" 
+                    Placeholder="*******"
+                    IsPassword="True"
+                    MaxLength="20"/>
+            </Border>
+
+            <Button
+                BackgroundColor="#0090ff"
+                Command="{Binding OnButtonClickedCommand}"
+                FontAttributes="Bold"
+                Text="Login"
+                TextColor="White" />
+
+            <Label
+                x:Name="lblNewUser"
+                HorizontalOptions="Center"
+                Text="New User? Register Here"
+                TextColor="#3b3bff"
+                TextDecorations="Underline">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnTappedCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label IsVisible="{Binding IsErrorVisible}" Text="{Binding ErrorMessage}" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
